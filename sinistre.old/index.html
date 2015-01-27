@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<html>
+<link rel="stylesheet" type="text/css" href="./css/style.css">
+  <head>
+<script type="text/javascript" src="js/script.js" charset="UTF-8"></script>
+</script>
+  </head>
+  
+  <body onload="init();window.setInterval('parsedate()', 1000);">
+    <canvas id="myCanvas" width="1530" height="1073">Votre Navigateur ne fonctionne pas avec cette technologie.</canvas>
+   <table id="tableau" border="1">
+	<thead>
+		<tr>
+			<th>Numéro</th>
+			<th>Date</th>
+			<th>Descriptifs</th>
+			<th>Nom du Controleur</th>
+			<th>Heures</th>
+			<th>Constat</th>
+			<th>Numero Keorisk</th>
+			<th>Supprimer</th>
+			<th style='display: none;'>>X</th>
+			<th style='display: none;'>>Y</th>
+		</tr>
+	</thead>
+	<tbody>
+
+	</tbody>
+</table>
+<form action="requete.php" name="form" id="recherche" method="POST">
+<input type="submit" value="Sauvegarder"></input>
+  </body>
+
+</html>
