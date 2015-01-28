@@ -86,8 +86,8 @@ while ($data = pg_fetch_array($req)) {
         </form><?php echo'<script>uploadByjQuery("'.$data['motif'].'", '.$data['coordx'].', '.$data['coordy'].')</script>';?></td>
 	<?php }else{echo'<td><a href="http://192.168.207.125/sinistre/photo_sinistre/files/'.$data['photo'].'">Oui</td>';};
 	echo '<td><img src="./images/supprimer.svg" onclick="deleteRow(this)" /></td>';
-	echo '<td style=\'display: inline;\'>'.$data['coordx'].'</td>';
-	echo '<td style=\'display: inline;\'>'.$data['coordy'].'</td>';
+	echo '<td style=\'display: none;\'>'.$data['coordx'].'</td>';
+	echo '<td style=\'display: none;\'>'.$data['coordy'].'</td>';
 	echo '<td><img src="./images/repair.png" onclick="archivage(this)" /></td>';
 	echo '</tr>';
 }
