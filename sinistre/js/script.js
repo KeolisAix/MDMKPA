@@ -12,6 +12,10 @@
 		img.height = 24; 
 		img.width = 24;
 		img.setAttribute("src","images/red.png");
+	  var cercleNoir = new Image();
+	  cercleNoir.height = 24;
+	  cercleNoir.width = 24;
+      cercleNoir.setAttribute("src","images/cercle.png");
 	  var numday, month, numyear, numhours, numminutes, numseconds, nowtoday;
 	  var heureSinistre;
 	  var ajaxRequest;
@@ -102,6 +106,17 @@ function parsedate() {
         //document.getElementById('dateheure').innerHTML = nowtoday;
 }
 initdate();
+function addCercle(X,Y){
+    X = X - 10;
+    Y = Y - 6;
+    ctx.drawImage(cercleNoir,X,Y);
+}
+function clearCercle(X,Y){
+    X = X - 10;
+    Y = Y - 6;
+    ctx.clearRect(X, Y, 32, 32);
+    ctx.drawImage(img, X + 10, Y + 6);
+}
 function ajouterLigne()
 {
 	WinLogon = document.getElementById("controleurHidden").innerHTML;

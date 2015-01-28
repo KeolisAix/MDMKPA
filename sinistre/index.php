@@ -7,7 +7,7 @@ $sql = "SELECT * FROM public.vehicules WHERE vehicule = '".$bus."'";
 $req = pg_query($base ,$sql) or die('Erreur SQL !<br />'.$sql.'<br />'.mysql_error());
 $controleur = $_GET['controleur'];
 $modele = $_GET['modele'];
-$modele = "GX 127C";
+//$modele = "GX 127C";
 echo '<div id="controleurHidden" style="display:none">'.$controleur.'</div>';
 echo '<div id="busHidden" style="display:none">'.$bus.'</div>';
 echo '<div id="modeleHidden" style="display:none">'.$modele.'</div>';
@@ -45,7 +45,6 @@ canvas {
     	$('#fade , .popup_block').fadeOut(function() {
 		$('#fade, a.close').remove();});
 }
-
     </script>
 </head>
 <body onload="init();window.setInterval('parsedate()', 1000);">
@@ -69,6 +68,7 @@ canvas {
     </tr>
     <?php
 while ($data = pg_fetch_array($req)) {
+    echo '<tr OnMouseOut="clearCercle('.$data['coordx'].','.$data['coordy'].')" OnMouseOver="addCercle('.$data['coordx'].','.$data['coordy'].')">';
 	echo '<td>'.$data['id'].'</td>';
 	echo '<td>'.$data['date'].'</td>';
 	echo '<td>'.urldecode(base64_decode($data['motif'])).'</td>';
@@ -86,8 +86,8 @@ while ($data = pg_fetch_array($req)) {
         </form><?php echo'<script>uploadByjQuery("'.$data['motif'].'", '.$data['coordx'].', '.$data['coordy'].')</script>';?></td>
 	<?php }else{echo'<td><a href="http://192.168.207.125/sinistre/photo_sinistre/files/'.$data['photo'].'">Oui</td>';};
 	echo '<td><img src="./images/supprimer.svg" onclick="deleteRow(this)" /></td>';
-	echo '<td style=\'display: none;\'>'.$data['coordx'].'</td>';
-	echo '<td style=\'display: none;\'>'.$data['coordy'].'</td>';
+	echo '<td style=\'display: inline;\'>'.$data['coordx'].'</td>';
+	echo '<td style=\'display: inline;\'>'.$data['coordy'].'</td>';
 	echo '<td><img src="./images/repair.png" onclick="archivage(this)" /></td>';
 	echo '</tr>';
 }

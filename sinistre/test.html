@@ -1,0 +1,22 @@
+<html> 
+<head> 
+<script type="text/javascript"> 
+function blink(){ 
+state = document.getElementsByTagName('img')[0].style.visibility; 
+if(state == 'hidden'){ 
+newState = 'visible'; 
+document.getElementsByTagName('p')[0].innerHTML = '1'; 
+}else if(state == 'visible'){ 
+newState = 'hidden'; 
+document.getElementsByTagName('p')[0].innerHTML = '0'; 
+} 
+document.getElementsByTagName('img')[0].style.visibility = newState; 
+} 
+setInterval('blink();', 1000); 
+</script> 
+</head> 
+<body> 
+<img src="images/supprimer.svg" style="visibility:hidden"> 
+<p> </p> 
+</body> 
+</html> 
