@@ -10,10 +10,11 @@ $datefr = $jour[date("w", strtotime($DateBefore))];
 $ligne = $_GET['ligne'];
 // END
 if($R == 1){
-	$sql="SELECT time_table_id FROM \"aix_\".time_table_dates WHERE date= '".$Date."'";
+	$sql="SELECT comment from \"aix_\".time_tables WHERE id=(SELECT time_table_id FROM \"aix_\".time_table_dates WHERE date='".$Date."')";
 	$req=pg_query($sql);
     $nb=pg_num_rows($req);	
-	echo $nb;
+    $row1 = pg_fetch_assoc($req);
+	echo $row1['comment'];
 	die();
 }
 if($R == 2){

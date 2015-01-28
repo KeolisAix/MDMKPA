@@ -66,8 +66,11 @@ $base = pg_connect("host=192.168.207.125 dbname=chouette2 user=postgres password
                  if (Reponse == 0) {
                      document.getElementById('ExceptionDay').value = 'Le Jour n\'est pas un jour particulier.';
                  }
-                 if (Reponse >= 1) {
-                     document.getElementById('ExceptionDay').value = 'il y\'a ' + Reponse + ' Calendrier(s) pour ce jour.';
+                 else {
+                     document.getElementById('ExceptionDay').value = 'Ce jour est un jour particulier.';
+                     document.getElementById('tableauEx').style.visibility = "visible";
+                     document.getElementById('tableauEx').rows[1].innerHTML = "<tr><td id='DayEx' style='border:solid 1px;text-align:center;padding: 5px'>"+Reponse+"</td></tr>";
+                     document.getElementById('ac-2').checked = true;
                  }
              }
              function AjaxListeCalendrier(ligne) {
@@ -153,8 +156,14 @@ $base = pg_connect("host=192.168.207.125 dbname=chouette2 user=postgres password
 				<div>
 					<input id="ac-2" style="display: none" name="accordion-1" type="radio" />
 					<label for="ac-2">Jour Particulier ? <i>(Information)</i></label>
-					<article id="Form2" class="ac-small">
+					<article id="Form2" class="ac-medium">
                         <center><p>Particulier : <br><input type="text" name="jour" id="ExceptionDay" style="width:300px;text-align:center" readonly></p></center>
+                        <center><table id='tableauEx' style="visibility: hidden">
+  		                    <tr>
+    		                    <th style='border:solid 1px;text-align:center;padding: 5px'>Nom</th>
+                                  <tr><td id="DayEx" style='border:solid 1px;text-align:center;padding: 5px'>ok</td></tr>
+  		                    </tr>
+                            </table>
                     </article>
 				</div>
 				<div>
