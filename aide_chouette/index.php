@@ -16,6 +16,8 @@ $base = pg_connect("host=192.168.207.125 dbname=chouette2 user=postgres password
              var ajaxRequest;
              var ajaxCalendrier;
              var ajaxAffiner;
+             var ExDay = document.getElementById('InputYesNoEx').value;
+             var cal = document.getElementById('tableau').rows[1].cells[0].innerHTML;
              function purge() {
                  document.getElementById('Form2').innerHTML = "";
              }
@@ -62,15 +64,20 @@ $base = pg_connect("host=192.168.207.125 dbname=chouette2 user=postgres password
                  queryString += "&ajax=1";
                  ajaxRequest.open("GET", "requete.php" + queryString, false);
                  ajaxRequest.send(null);
+                 console.log("---- R1 ----");
+                 console.log(queryString);
+                 console.log(ajaxRequest.responseText);
+                 console.log("------------");
                  var Reponse = ajaxRequest.responseText;
                  if (Reponse == 0) {
                      document.getElementById('ExceptionDay').value = 'Le Jour n\'est pas un jour particulier.';
+                     document.getElementById('InputYesNoEx').value = "0";
+                     document.getElementById("tableauEx").style.display = "none";
                  }
                  else {
                      document.getElementById('ExceptionDay').value = 'Ce jour est un jour particulier.';
-                     document.getElementById('tableauEx').style.visibility = "visible";
-                     document.getElementById('tableauEx').rows[1].innerHTML = "<tr><td id='DayEx' style='border:solid 1px;text-align:center;padding: 5px'>"+Reponse+"</td></tr>";
-                     document.getElementById('ac-2').checked = true;
+                     document.getElementById('resultatEx').innerHTML = Reponse;
+                     document.getElementById('InputYesNoEx').value = "1";
                  }
              }
              function AjaxListeCalendrier(ligne) {
@@ -90,10 +97,22 @@ $base = pg_connect("host=192.168.207.125 dbname=chouette2 user=postgres password
                          }
                      }
                  }
+                 if (document.getElementById('ExceptionDay').value == 'Ce jour est un jour particulier.') {
+                     Exday = 1;
+                     cal = document.getElementById("tableauEx").rows[1].cells[0].innerHTML;
+                 } else {
+                     Exday = 0;
+                     cal = 0;
+                 }
                  var queryString = "?ligne=" + ligne;
-                 queryString += "&ajax=2&date=" + dateRecherche;
+                 queryString += "&ajax=2&date=" + dateRecherche + "&Ex=" + Exday + "&cal=" + cal;
+                 //alert(queryString);
                  ajaxCalendrier.open("GET", "requete.php" + queryString, false);
                  ajaxCalendrier.send(null);
+                 console.log("---- R2 ----");
+                 console.log(queryString);
+                 console.log(ajaxCalendrier.responseText);
+                 console.log("------------");
                  var Reponse = ajaxCalendrier.responseText;
                  document.getElementById('Form3').innerHTML = ajaxCalendrier.responseText;
              }
@@ -115,11 +134,20 @@ $base = pg_connect("host=192.168.207.125 dbname=chouette2 user=postgres password
                          }
                      }
                  }
+                 ExDay = document.getElementById('InputYesNoEx').value;
                  var queryString = "?ajax=4";
-                 queryString += "&nbligne=" + nbLigneTab + "&date=" + dateRecherche + "&jourSemaine=" + document.getElementById('joursemaine').value + "&ligne=" + document.getElementById("date").options[document.getElementById('date').selectedIndex].text;
-                 //alert(queryString);
+                 if (ExDay == "0") {
+                     queryString += "&nbligne=" + nbLigneTab + "&date=" + dateRecherche + "&jourSemaine=" + document.getElementById('joursemaine').value + "&Ex=" + ExDay + "&ligne=" + document.getElementById("date").options[document.getElementById('date').selectedIndex].text;
+                 } else {
+                     queryString += "&cal=" + cal + "&nbligne=" + nbLigneTab + "&date=" + dateRecherche + "&jourSemaine=" + document.getElementById('joursemaine').value + "&Ex=" + ExDay + "&ligne=" + document.getElementById("date").options[document.getElementById('date').selectedIndex].text;
+                 }
+                 console.log(queryString);
                  ajaxAffiner.open("GET", "requete.php" + queryString, false);
                  ajaxAffiner.send(null);
+                 console.log("---- R4 ----");
+                 console.log(queryString);
+                 console.log(ajaxAffiner.responseText);
+                 console.log("------------");
                  var Reponse = ajaxAffiner.responseText;
                  document.getElementById('resultat').innerHTML = ajaxAffiner.responseText;
              }
@@ -158,12 +186,8 @@ $base = pg_connect("host=192.168.207.125 dbname=chouette2 user=postgres password
 					<label for="ac-2">Jour Particulier ? <i>(Information)</i></label>
 					<article id="Form2" class="ac-medium">
                         <center><p>Particulier : <br><input type="text" name="jour" id="ExceptionDay" style="width:300px;text-align:center" readonly></p></center>
-                        <center><table id='tableauEx' style="visibility: hidden">
-  		                    <tr>
-    		                    <th style='border:solid 1px;text-align:center;padding: 5px'>Nom</th>
-                                  <tr><td id="DayEx" style='border:solid 1px;text-align:center;padding: 5px'>ok</td></tr>
-  		                    </tr>
-                            </table>
+                        <center><div id="resultatEx"></div>
+                            <input type="text" style="display: none" id="InputYesNoEx" value="0"></input>
                     </article>
 				</div>
 				<div>
