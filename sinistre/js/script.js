@@ -2,6 +2,7 @@
 	  var canvas;
       var ctx;
 	  var ContenuDuSinistre;
+	  var DateAccident = "00/00/0000";
 	  var WinLogon;
 	  var Constat;
 	  var KeoRisk;
@@ -35,14 +36,36 @@ function init() {
 			x = mousePos.x;
 
 			writeMessage(canvas, message);
-			ContenuDuSinistre = prompt("Description du Sinistre : ", "");
-			ContenuDuSinistre = ContenuDuSinistre.replace(/[\/\\#+()$~"*&<>{}]/g,'.');
-			if (ContenuDuSinistre) {
-				ctx.drawImage(img,mousePos.x,mousePos.y);	
-				Constat = "Non";
-				KeoRisk = ""
-				ajouterLigne();	
-				}
+           
+           var statesdemo = {
+	            state0: {
+		            title: 'Ajout d\'un Sinistre ! Aïe Aïe Aïe !',
+                    html:'<center><img src="http://www.iconsbase.net/images/icones/9bf813902e963aa47a2be9882547662f/9bf813902e963aa47a2be9882547662f_64.png"><label>Description du Sinistre : </label><center><br><input type="text" id="MotifDuSinistre" style="width:100%;" value="" autofocus><br />',
+		            buttons: { Annuler: false, Valider: true },
+		            //focus: 1,
+		            submit:function(e,v,m,f){
+			            if(v){
+                                ctx.drawImage(img,mousePos.x,mousePos.y);	
+				                Constat = "Non";
+				                KeoRisk = "";
+                                ContenuDuSinistre = document.getElementById("MotifDuSinistre").value;
+				                ajouterLigne();	
+                            $.prompt.close();
+			            }
+			            $.prompt.close();
+		            }
+	            },
+            };
+
+            $.prompt(statesdemo);
+			//ContenuDuSinistre = prompt("Description du Sinistre : ", "");
+			//ContenuDuSinistre = ContenuDuSinistre.replace(/[\/\\#+()$~"*&<>{}]/g,'.');
+			//if (ContenuDuSinistre) {
+				//ctx.drawImage(img,mousePos.x,mousePos.y);	
+				//Constat = "Non";
+				//KeoRisk = ""
+				//ajouterLigne();	
+				//}
 			}, false);
 			draw(ctx);
       }
@@ -124,28 +147,32 @@ function ajouterLigne()
 	var ligne = tableau.insertRow(-1);
 	
 	var colonne0 = ligne.insertCell(0);
-	colonne0.innerHTML += i;//DATE DU SINISTRE
+	colonne0.innerHTML += i;//ID
 	
 	var colonne1 = ligne.insertCell(1);
-	colonne1.innerHTML += numday+"/"+month+"/"+numyear;//DATE DU SINISTRE
+	colonne1.innerHTML += numday+"/"+month+"/"+numyear;//DATE Declaration
 	
 	var colonne2 = ligne.insertCell(2);
-	colonne2.innerHTML += ContenuDuSinistre; //CONTENU DU SINISTRE
+    heureSinistre = numhours+"H"+numminutes;
+	colonne2.innerHTML += heureSinistre;//HEURE DE LA DECLARATION
+	
 	
 	var colonne3 = ligne.insertCell(3);
 	colonne3.innerHTML += WinLogon;//NOM D'UTILISATEUR
 	
 	var colonne4 = ligne.insertCell(4);
-	heureSinistre = numhours+"H"+numminutes;
-	colonne4.innerHTML += heureSinistre;//HEURE DE LA DECLARATION
-	
+	colonne4.innerHTML += DateAccident; //Date Accident
+
 	var colonne5 = ligne.insertCell(5);
-	colonne5.innerHTML += "<a onclick='modifierConstat(this)'><u>"+Constat+"</u></a>"; // CONSTAT ?
+	colonne5.innerHTML += ContenuDuSinistre; //CONTENU DU SINISTRE
 	
 	var colonne6 = ligne.insertCell(6);
-	colonne6.innerHTML += KeoRisk; // NUMERO KEORISK ?
+	colonne6.innerHTML += "<a onclick='modifierConstat(this)'><u>"+Constat+"</u></a>"; // CONSTAT ?
+	
+	var colonne12 = ligne.insertCell(7);
+	colonne12.innerHTML += KeoRisk; // NUMERO KEORISK ?
 
-	var colonne11 = ligne.insertCell(7);
+	var colonne11 = ligne.insertCell(8);
 	colonne11.innerHTML +=
     	'<br><span class="btn btn-success fileinput-button">'+
         '<i class="glyphicon glyphicon-plus"></i>'+
@@ -156,19 +183,22 @@ function ajouterLigne()
         '<div class="progress-bar progress-bar-success"></div>'+
     	'</div>'+
     	'<div id="files" class="files"></div>';
-		
-	var colonne7 = ligne.insertCell(8);
+	
+    var colonne13 = ligne.insertCell(9);
+    colonne13.innerHTML += "<a href='https://www.google.fr/maps/@"+"48.85837,2.294481,17"+"z'>Lien</a>";
+    	
+	var colonne7 = ligne.insertCell(10);
 	colonne7.innerHTML += "<img src='./images/supprimer.svg' onclick='deleteRow(this)' />"; // SUPP ?
 	
-	var colonne8 = ligne.insertCell(9);
+	var colonne8 = ligne.insertCell(11);
 	colonne8.innerHTML += x; // X ?
 	colonne8.style.display = 'none';
 	
-	var colonne9 = ligne.insertCell(10);
+	var colonne9 = ligne.insertCell(12);
 	colonne9.innerHTML += y; // Y ?
 	colonne9.style.display = 'none';
 	
-	var colonne10 = ligne.insertCell(11);
+	var colonne10 = ligne.insertCell(13);
 	colonne10.innerHTML += "<img src='./images/repair.png' onclick='archivage(this)' />"; // ARCHIVER ?	
 	try{
 		ajaxRequest = new XMLHttpRequest();
@@ -238,16 +268,19 @@ function draw(ctx) {
 		}		
 		for(var i= 1; i < document.getElementById('tableau').rows.length; i++)
 		{
-			 ctx.drawImage(img, document.getElementById("tableau").rows[i].cells[9].innerHTML,document.getElementById("tableau").rows[i].cells[10].innerHTML);
+			 ctx.drawImage(img, document.getElementById("tableau").rows[i].cells[9].innerHTML,document.getElementById("tableau").rows[i].cells[12].innerHTML);
 		}
 } //draw
 
 function deleteRow(r) {
-		userInput = confirm('Etes-vous sur de vouloir supprimer ce sinistre ?');
-			if (userInput == true) {
-					var i = r.parentNode.parentNode.rowIndex;
-					var xtab = document.getElementById("tableau").rows[i].cells[9].innerHTML ;
-					var ytab = document.getElementById("tableau").rows[i].cells[10].innerHTML ;
+            $.prompt("<img src='http://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/Danger.png/40px-Danger.png'><center>Etes-vous sur de vouloir supprimer ce sinistre ?</center>", {
+	        title: "Attention ! Risque de Sinistre ! :-O",
+	        buttons: { "Oui, je suis sur": true, "Non, ne pas supprimer": false },
+	        submit: function(e,v,m,f){
+		        if(v){
+		        var i = r.parentNode.parentNode.rowIndex;
+					var xtab = document.getElementById("tableau").rows[i].cells[11].innerHTML ;
+					var ytab = document.getElementById("tableau").rows[i].cells[12].innerHTML ;
 					ctx.clearRect(xtab, ytab, 16, 16);
 					try{
 						ajaxRequestDel = new XMLHttpRequest();
@@ -266,21 +299,23 @@ function deleteRow(r) {
 						   }
 						 }
 				 var bus = document.getElementById("busHidden").innerHTML;
-				 var motifupdate = encode64(document.getElementById("tableau").rows[i].cells[2].innerHTML);
+				 var motifupdate = encode64(document.getElementById("tableau").rows[i].cells[5].innerHTML);
 				 var queryString = "?update=2";
 				 queryString +=  "&motifUpdate=" + motifupdate + "&bus=" + bus;
 				 ajaxRequestDel.open("GET", "requete.php" + queryString, true);
 				 ajaxRequestDel.send(null);
 				 document.getElementById("tableau").deleteRow(i);
-			}
+                }
+	        }
+        });
 } //deleterow
 
 function modifierConstat(w){
 		var j = w.parentNode.parentNode.rowIndex;
 		var NumKeorisk = prompt("Numero KeoRisk : ", "")
 		if(NumKeorisk != null){
-		document.getElementById("tableau").rows[j].cells[5].innerHTML = "<u>Oui</u>";
-		document.getElementById("tableau").rows[j].cells[6].innerHTML = NumKeorisk;
+		document.getElementById("tableau").rows[j].cells[6].innerHTML = "<u>Oui</u>";
+		document.getElementById("tableau").rows[j].cells[7].innerHTML = NumKeorisk;
 			try{
 			ajaxRequestUpdate = new XMLHttpRequest();
 			}catch (e){
@@ -298,9 +333,9 @@ function modifierConstat(w){
 			   }
 			 }
 	 var bus = document.getElementById("busHidden").innerHTML;
-	 var x = document.getElementById("tableau").rows[j].cells[9].innerHTML;
-	 var y = document.getElementById("tableau").rows[j].cells[10].innerHTML;
-	 var motifupdate = encode64(document.getElementById("tableau").rows[j].cells[2].innerHTML);
+	 var x = document.getElementById("tableau").rows[j].cells[11].innerHTML;
+	 var y = document.getElementById("tableau").rows[j].cells[12].innerHTML;
+	 var motifupdate = encode64(document.getElementById("tableau").rows[j].cells[5].innerHTML);
 	 var queryString = "?update=1";
 	 queryString +=  "&motifUpdate=" + motifupdate + "&bus=" + bus + "&NumKeo=" + NumKeorisk + "&x=" + x + "&y=" + y;
 	 ajaxRequestUpdate.open("GET", "requete.php" + queryString, true);
@@ -329,10 +364,10 @@ function archivage(w){
 					   }
 					 }
 			 var bus = document.getElementById("busHidden").innerHTML;
-			 var x = document.getElementById("tableau").rows[k].cells[9].innerHTML;
-			 var y = document.getElementById("tableau").rows[k].cells[10].innerHTML;
+			 var x = document.getElementById("tableau").rows[k].cells[11].innerHTML;
+			 var y = document.getElementById("tableau").rows[k].cells[12].innerHTML;
 				 ctx.clearRect(x, y, 16, 16);
-			 var motifArchive = document.getElementById("tableau").rows[k].cells[2].innerHTML;
+			 var motifArchive = document.getElementById("tableau").rows[k].cells[5].innerHTML;
 			 var queryString = "?update=3";
 			 queryString +=  "&motifArchive=" + motifArchive + "&bus=" + bus + "&x=" + x + "&y=" + y;
 			 ajaxArchive.open("GET", "requete.php" + queryString, true);

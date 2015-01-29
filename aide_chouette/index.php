@@ -165,7 +165,7 @@ $base = pg_connect("host=192.168.207.125 dbname=chouette2 user=postgres password
 					<label for="ac-1">Quel jour ? Quelle ligne ?</label>
 					<article class="ac-large">
                         <form method="post" action="#" name="FormDate">
-						<center><p>Date à Rechercher : <br><input type="date" name="DateChoix" onChange="return JourDeLaDate()"></p>
+						<center><p>Date à Rechercher : <br><input type="date" name="DateChoix" onChange="return JourDeLaDate()"><font size="1">ex : 2015-01-01</font></p>
                         <center><p>Jour de la Semaine : <br><input type="text" name="jour" id="joursemaine" style="width:200px;text-align:center" readonly></p></center>
                         <center><p>Numéro de Ligne :<br><select onChange='AjaxListeCalendrier(this.value);' name="type" id="date"></p></center>
                         <option selected>Choisir</option>  
