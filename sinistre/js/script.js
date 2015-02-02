@@ -3,6 +3,7 @@
       var ctx;
 	  var ContenuDuSinistre;
 	  var DateAccident = "00/00/0000";
+	  var CoordonneesAccident;
 	  var WinLogon;
 	  var Constat;
 	  var KeoRisk;
@@ -29,44 +30,70 @@ function init() {
         ctx = canvas.getContext("2d");
 		i=0;
 		canvas.addEventListener('click', function (evt) {
-			i = i + 1;
-			var mousePos = getMousePos(canvas, evt);
-			var message = mousePos.x + ',' + mousePos.y + '= ' + i;
-			y = mousePos.y;
-			x = mousePos.x;
+		    i = i + 1;
+		    var mousePos = getMousePos(canvas, evt);
+		    var message = mousePos.x + ',' + mousePos.y + '= ' + i;
+		    y = mousePos.y;
+		    x = mousePos.x;
 
-			writeMessage(canvas, message);
-           
-           var statesdemo = {
-	            state0: {
+		    writeMessage(canvas, message);
+
+		    var statesdemo = {
+		        state0: {
 		            title: 'Ajout d\'un Sinistre ! Aïe Aïe Aïe !',
-                    html:'<center><img src="http://www.iconsbase.net/images/icones/9bf813902e963aa47a2be9882547662f/9bf813902e963aa47a2be9882547662f_64.png"><label>Description du Sinistre : </label><center><br><input type="text" id="MotifDuSinistre" style="width:100%;" value="" autofocus><br />',
-		            buttons: { Annuler: false, Valider: true },
-		            //focus: 1,
-		            submit:function(e,v,m,f){
-			            if(v){
-                                ctx.drawImage(img,mousePos.x,mousePos.y);	
-				                Constat = "Non";
-				                KeoRisk = "";
-                                ContenuDuSinistre = document.getElementById("MotifDuSinistre").value;
-				                ajouterLigne();	
-                            $.prompt.close();
-			            }
-			            $.prompt.close();
+		            html: '<center><img src="http://www.iconsbase.net/images/icones/9bf813902e963aa47a2be9882547662f/9bf813902e963aa47a2be9882547662f_64.png"><label>Description du Sinistre : </label><center><br><input type="text" id="MotifDuSinistre" style="width:100%;" value="" autofocus><br />',
+		            buttons: { Annuler: false, Suivant: true },
+		            focus: 1,
+		            submit: function (e, v, m, f) {
+		                if (v) {
+		                    e.preventDefault();
+		                    $.prompt.goToState('state1');
+		                    ctx.drawImage(img, mousePos.x, mousePos.y);
+		                    Constat = "Non";
+		                    KeoRisk = "";
+		                    ContenuDuSinistre = document.getElementById("MotifDuSinistre").value;
+		                    return false;
+		                }
+		                $.prompt.close();
 		            }
-	            },
-            };
+		        },
+		        state1: {
+                    title: 'Ajout d\'un Sinistre ! Aïe Aïe Aïe !',
+		            html: '<center><img src="http://www.iconsbase.net/images/icones/9bf813902e963aa47a2be9882547662f/9bf813902e963aa47a2be9882547662f_64.png"><label>Date du Sinistre : </label><center><br><input type="text" id="DateDuSinistre" style="width:100%;" value="01/01/2015" autofocus><br />',
+		            buttons: { Retour: -1, "Suivant": 0 },
+		            focus: 1,
+		            submit: function (e, v, m, f) {
+		                e.preventDefault();
+		                if (v == 0) {
+                            e.preventDefault();
+		                    $.prompt.goToState('state2');
+                            DateAccident = document.getElementById("DateDuSinistre").value;
+		                    return false;
+		                }
+		                else if (v == -1)
+		                    $.prompt.goToState('state0');
+		            }
+		        },
+                state2: {
+                    title: 'Ajout d\'un Sinistre ! Aïe Aïe Aïe !',
+		            html: '<center><img src="http://www.icone-png.com/png/15/14854.png"><label>Coordonnées du Sinistre :<br><a href="https://www.google.fr/maps/place/Aix-en-Provence/@43.535974,5.387947,12z/data=!3m1!4b1!4m2!3m1!1s0x12c98da304b91259:0x5cb953bec8b688a3" onclick="window.open(this.href); return false;">Ouvrir Google Maps</a></label><center><br><input type="text" id="CoordonneesSinistre" style="width:100%;" value="48.858388, 2.294481" autofocus><br />',
+		            buttons: { Retour: -1, "Enregistrer le sinistre": 0 },
+		            focus: 1,
+		            submit: function (e, v, m, f) {
+		                e.preventDefault();
+		                if (v == 0) {
+                            CoordonneesAccident = document.getElementById("CoordonneesSinistre").value;
+		                    ajouterLigne();
+		                    $.prompt.close();
+		                }
+		                else if (v == -1)
+		                    $.prompt.goToState('state1');
+		            }
+		        }
+		    };
 
-            $.prompt(statesdemo);
-			//ContenuDuSinistre = prompt("Description du Sinistre : ", "");
-			//ContenuDuSinistre = ContenuDuSinistre.replace(/[\/\\#+()$~"*&<>{}]/g,'.');
-			//if (ContenuDuSinistre) {
-				//ctx.drawImage(img,mousePos.x,mousePos.y);	
-				//Constat = "Non";
-				//KeoRisk = ""
-				//ajouterLigne();	
-				//}
-			}, false);
+		    $.prompt(statesdemo);
+		}, false);
 			draw(ctx);
       }
 function initdate() {
@@ -185,7 +212,7 @@ function ajouterLigne()
     	'<div id="files" class="files"></div>';
 	
     var colonne13 = ligne.insertCell(9);
-    colonne13.innerHTML += "<a href='https://www.google.fr/maps/@"+"48.85837,2.294481,17"+"z'>Lien</a>";
+    colonne13.innerHTML += "<a href='http://maps.google.com?q="+CoordonneesAccident+"'>Lien</a>";
     	
 	var colonne7 = ligne.insertCell(10);
 	colonne7.innerHTML += "<img src='./images/supprimer.svg' onclick='deleteRow(this)' />"; // SUPP ?
@@ -222,7 +249,7 @@ function ajouterLigne()
  var heure = heureSinistre;
  var bus = document.getElementById("busHidden").innerHTML;
  var queryString = "?date=" + date ;
- queryString +=  "&update=0&descriptif=" + descriptif + "&controleur=" + controleur + "&bus=" + bus + "&heure=" + heure + "&x=" + x + "&y=" + y;
+ queryString +=  "&update=0&descriptif=" + descriptif + "&controleur=" + controleur + "&bus=" + bus + "&heure=" + heure + "&x=" + x + "&y=" + y + "&DateSinistre=" + DateAccident + "&CoordAcc="+ CoordonneesAccident;
  ajaxRequest.open("GET", "requete.php" + queryString, true);
  ajaxRequest.send(null); 
  uploadByjQuery(descriptif, x, y);

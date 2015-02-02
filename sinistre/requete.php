@@ -8,13 +8,15 @@ $bus = $_GET['bus'];
 $x = $_GET['x'];
 $y = $_GET['y'];
 $update = $_GET['update'];
+$dateAccident = $_GET['DateSinistre'];
+$coordAcc = $_GET['CoordAcc'];
 
 
 //echo $date."/".$motif."/".$controleur."/".$heure."/";
 $db = pg_connect("host=192.168.207.125 dbname=vehicules_sinistre user=postgres password=postgres");
 
 if ($update == 0){
-	$sql = "INSERT INTO vehicules (id,vehicule,motif,controleur,date,heure,constat,num_keorisk,coordx,coordy,date_sinistre,coordonnees_sinistre) VALUES (DEFAULT, '".$bus."', '".$motif."', '".$controleur."', '".$date."', '".$heure."', '0', NULL, '".$x."', '".$y."', '00/00/0000', '48.858388, 2.294481')";
+	$sql = "INSERT INTO vehicules (id,vehicule,motif,controleur,date,heure,constat,num_keorisk,coordx,coordy,date_sinistre,coordonnees_sinistre) VALUES (DEFAULT, '".$bus."', '".$motif."', '".$controleur."', '".$date."', '".$heure."', '0', NULL, '".$x."', '".$y."', '".$dateAccident."', '".$coordAcc."')";
 }
 
 if ($update == 1){

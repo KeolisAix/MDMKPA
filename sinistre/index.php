@@ -4,7 +4,7 @@ $base = pg_connect("host=192.168.207.125 dbname=vehicules_sinistre user=postgres
 $bus = $_GET['bus'];
 //$bus = "117014";
 $sql = "SELECT * FROM public.vehicules WHERE vehicule = '".$bus."'";
-$req = pg_query($base ,$sql) or die('Erreur SQL !<br />'.$sql.'<br />'.mysql_error());
+$req = pg_query($base ,$sql) or die('Erreur SQL !<br />'.$sql.'<br />'.pgsql_error());
 $controleur = $_GET['controleur'];
 $modele = $_GET['modele'];
 //$modele = "GX 127C";
@@ -90,7 +90,7 @@ while ($data = pg_fetch_array($req)) {
             <input type="submit" value="Upload Image" name="submit">
         </form><?php echo'<script>uploadByjQuery("'.$data['motif'].'", '.$data['coordx'].', '.$data['coordy'].')</script>';?></td>
 	<?php }else{echo'<td><a href="http://192.168.207.125/sinistre/photo_sinistre/files/'.$data['photo'].'">Oui</td>';};
-    echo '<td>'.$data['coordonnees_sinistre'].'</td>'; 
+    echo '<td><a href="http://mdmkpa/carte/index.php?q='.$data['coordonnees_sinistre'].'" onclick="window.open(this.href); return false;">'.$data['coordonnees_sinistre'].'</a></td>'; 
 	echo '<td><img src="./images/supprimer.svg" onclick="deleteRow(this)" /></td>';
 	echo '<td style=\'display: none;\'>'.$data['coordx'].'</td>';
 	echo '<td style=\'display: none;\'>'.$data['coordy'].'</td>';
