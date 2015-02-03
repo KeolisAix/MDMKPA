@@ -394,7 +394,7 @@ function archivage(w){
 			 var x = document.getElementById("tableau").rows[k].cells[11].innerHTML;
 			 var y = document.getElementById("tableau").rows[k].cells[12].innerHTML;
 				 ctx.clearRect(x, y, 16, 16);
-			 var motifArchive = document.getElementById("tableau").rows[k].cells[5].innerHTML;
+			 var motifArchive = encode64(document.getElementById("tableau").rows[k].cells[5].innerHTML);
 			 var queryString = "?update=3";
 			 queryString +=  "&motifArchive=" + motifArchive + "&bus=" + bus + "&x=" + x + "&y=" + y;
 			 ajaxArchive.open("GET", "requete.php" + queryString, true);

@@ -21,7 +21,7 @@ function addsinistre(location, title, bus, dateSinistre, dateDeclaration, contro
         } else {
             var bulle = "<img src='http://192.168.207.125/sinistre/photo_sinistre/files/" + this.photo + "'  width='300' height='120'  id='ok' style='overflow:auto; border:solid 1px black;'></img><center><br>SINISTRE :<br>";
         }
-        infowindowSinistre.setContent(bulle + " " + this.title + "<br>BUS: " + this.bus + "<br>Date Sinistre: " + this.dateS + "<br>Date Déclaration: " + this.dateD + "<br>Contrôleur: " + this.controleur + "</center>");
+        infowindowSinistre.setContent(bulle + " " + this.title + "<br>BUS: " + this.bus + "<br>Date Sinistre: " + this.dateS + "<br>Date D&eacute;claration: " + this.dateD + "<br>Contr&ocirc;leur: " + this.controleur + "</center>");
         infowindowSinistre.open(this.getMap(), this);
     });
 }

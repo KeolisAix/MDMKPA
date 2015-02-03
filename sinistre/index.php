@@ -3,7 +3,7 @@
 $base = pg_connect("host=192.168.207.125 dbname=vehicules_sinistre user=postgres password=postgres");
 $bus = $_GET['bus'];
 //$bus = "117014";
-$sql = "SELECT * FROM public.vehicules WHERE vehicule = '".$bus."'";
+$sql = "SELECT * FROM public.vehicules WHERE vehicule = '".$bus."' and archive = '0'";
 $req = pg_query($base ,$sql) or die('Erreur SQL !<br />'.$sql.'<br />'.pgsql_error());
 $controleur = $_GET['controleur'];
 $modele = $_GET['modele'];
@@ -51,7 +51,7 @@ canvas {
 </head>
 <body onload="init();window.setInterval('parsedate()', 1000);">
 <canvas id="myCanvas" width="1150" height="805">Votre Navigateur ne fonctionne pas avec cette technologie.</canvas>
-<center><button onClick="window.location.href='http://mdmkpa/vehicules/'" class="myButton">Retour &agrave; l'accueil</button><button onClick="window.location.href='http://mdmkpa/maps/'" class="myButton">Carte des Sinistres</button></center><br>
+<center><button onClick="window.location.href='http://mdmkpa/vehicules/'" class="myButton">Retour &agrave; l'accueil</button><button onClick="window.location.href='http://mdmkpa/carte/'" class="myButton">Carte des Sinistres</button></center><br>
 <table id="tableau" border="1">
   <thead>
     <tr>

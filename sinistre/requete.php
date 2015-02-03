@@ -16,7 +16,7 @@ $coordAcc = $_GET['CoordAcc'];
 $db = pg_connect("host=192.168.207.125 dbname=vehicules_sinistre user=postgres password=postgres");
 
 if ($update == 0){
-	$sql = "INSERT INTO vehicules (id,vehicule,motif,controleur,date,heure,constat,num_keorisk,coordx,coordy,date_sinistre,coordonnees_sinistre) VALUES (DEFAULT, '".$bus."', '".$motif."', '".$controleur."', '".$date."', '".$heure."', '0', NULL, '".$x."', '".$y."', '".$dateAccident."', '".$coordAcc."')";
+	$sql = "INSERT INTO vehicules (id,vehicule,motif,controleur,date,heure,constat,num_keorisk,coordx,coordy,date_sinistre,coordonnees_sinistre, archive) VALUES (DEFAULT, '".$bus."', '".$motif."', '".$controleur."', '".$date."', '".$heure."', '0', NULL, '".$x."', '".$y."', '".$dateAccident."', '".$coordAcc."', '0')";
 }
 
 if ($update == 1){
@@ -35,10 +35,11 @@ if ($update == 2){
 
 if ($update == 3){
 	$motifArchive = $_GET['motifArchive'];
-	$sql2 = "INSERT INTO archive SELECT * FROM vehicules WHERE motif = '".$motifArchive."' AND vehicule = '".$bus."' AND coordx = '".$x."' AND coordy = '".$y."'";
-	$req = pg_query($sql2) or die('Erreur SQL !<br>'.$sql2.'<br>'.mysql_error());
-	echo "requete ok";
-	$sql = "DELETE FROM vehicules WHERE motif = '".$motifArchive."' AND vehicule = '".$bus."' AND coordx = '".$x."' AND coordy = '".$y."'";
+	$sql = "UPDATE vehicules SET archive = '1' WHERE motif = '".$motifArchive."' AND vehicule = '".$bus."' AND coordx = '".$x."' AND coordy = '".$y."'";
+	//$req = pg_query($sql2) or die('Erreur SQL !<br>'.$sql2.'<br>'.mysql_error());
+	echo $sql;
+    echo "<br>Oui 3";
+	//$sql = "DELETE FROM vehicules WHERE motif = '".$motifArchive."' AND vehicule = '".$bus."' AND coordx = '".$x."' AND coordy = '".$y."'";
 }
 
 if ($update == 4){

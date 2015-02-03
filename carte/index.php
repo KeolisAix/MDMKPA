@@ -58,9 +58,9 @@ if($q == 0){
     ?>
   <body>
     <div id="panel">
-      <input onclick="clearArrets();" type=button value="Cacher les Arrêts">
-      <input onclick="showArrets();" type=button value="Afficher les Arrêts">
-        <input onclick="showSinistre();" type=button value="Afficher les Sinistres" id="Btn_Sinistre">
+      <input onclick="clearArrets();" type=button value="Cacher les Arr&ecirc;ts">
+      <input onclick="showArrets();" type=button value="Afficher les Arr&ecirc;ts">
+        <input onclick="showSinistre();" type=button value="Afficher les Sinistres" id="Btn_Sinistre" style="display:none">
     </div>
     <div id="map-canvas"></div>
   </body>
