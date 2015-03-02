@@ -95,7 +95,12 @@ function init() {
 		    $.prompt(statesdemo);
 		}, false);
 			draw(ctx);
+       
       }
+
+function test(){
+    window.location = canvas.toDataURL("image/png");
+}
 function initdate() {
         var now = new Date();
  

@@ -13,7 +13,7 @@ $coordAcc = $_GET['CoordAcc'];
 
 
 //echo $date."/".$motif."/".$controleur."/".$heure."/";
-$db = pg_connect("host=192.168.207.125 dbname=vehicules_sinistre user=postgres password=postgres");
+$db = pg_connect("host=192.168.207.21 dbname=vehicules_sinistre user=postgres password=postgres");
 
 if ($update == 0){
 	$sql = "INSERT INTO vehicules (id,vehicule,motif,controleur,date,heure,constat,num_keorisk,coordx,coordy,date_sinistre,coordonnees_sinistre, archive) VALUES (DEFAULT, '".$bus."', '".$motif."', '".$controleur."', '".$date."', '".$heure."', '0', NULL, '".$x."', '".$y."', '".$dateAccident."', '".$coordAcc."', '0')";

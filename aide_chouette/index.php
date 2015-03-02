@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <?php
 //CONNECTION ZONE
-$base = pg_connect("host=192.168.207.125 dbname=chouette2 user=postgres password=postgres");
+$base = pg_connect("host=192.168.207.21 dbname=chouette2 user=postgres password=postgres");
+$schema = $_GET['schema'];
+echo "<script>var schema = document.URL.split('?schema=')[1]; </script>";
 ?>
 <html lang="en">
     <head>
@@ -43,6 +45,10 @@ $base = pg_connect("host=192.168.207.125 dbname=chouette2 user=postgres password
                  document.forms['FormDate'].elements['jour'].value = date2;
                  AjaxExceptionDay()
              }
+             function ChoixSchema(schema) {
+                 var URL = document.URL.split('?')[0];
+                 document.location.href = URL + "?schema=" + schema;
+             }
              function AjaxExceptionDay() {
                  try {
                      ajaxRequest = new XMLHttpRequest();
@@ -61,7 +67,7 @@ $base = pg_connect("host=192.168.207.125 dbname=chouette2 user=postgres password
                      }
                  }
                  var queryString = "?date=" + dateRecherche;
-                 queryString += "&ajax=1";
+                 queryString += "&ajax=1" + "&schema=" + schema;
                  ajaxRequest.open("GET", "requete.php" + queryString, false);
                  ajaxRequest.send(null);
                  console.log("---- R1 ----");
@@ -105,7 +111,7 @@ $base = pg_connect("host=192.168.207.125 dbname=chouette2 user=postgres password
                      cal = 0;
                  }
                  var queryString = "?ligne=" + ligne;
-                 queryString += "&ajax=2&date=" + dateRecherche + "&Ex=" + Exday + "&cal=" + cal;
+                 queryString += "&ajax=2&date=" + dateRecherche + "&Ex=" + Exday + "&cal=" + cal + "&schema=" + schema;
                  //alert(queryString);
                  ajaxCalendrier.open("GET", "requete.php" + queryString, false);
                  ajaxCalendrier.send(null);
@@ -137,9 +143,9 @@ $base = pg_connect("host=192.168.207.125 dbname=chouette2 user=postgres password
                  ExDay = document.getElementById('InputYesNoEx').value;
                  var queryString = "?ajax=4";
                  if (ExDay == "0") {
-                     queryString += "&nbligne=" + nbLigneTab + "&date=" + dateRecherche + "&jourSemaine=" + document.getElementById('joursemaine').value + "&Ex=" + ExDay + "&ligne=" + document.getElementById("date").options[document.getElementById('date').selectedIndex].text;
+                     queryString += "&nbligne=" + nbLigneTab + "&date=" + dateRecherche + "&jourSemaine=" + document.getElementById('joursemaine').value + "&Ex=" + ExDay + "&ligne=" + document.getElementById("date").options[document.getElementById('date').selectedIndex].text + "&schema=" + schema;
                  } else {
-                     queryString += "&cal=" + cal + "&nbligne=" + nbLigneTab + "&date=" + dateRecherche + "&jourSemaine=" + document.getElementById('joursemaine').value + "&Ex=" + ExDay + "&ligne=" + document.getElementById("date").options[document.getElementById('date').selectedIndex].text;
+                     queryString += "&cal=" + cal + "&nbligne=" + nbLigneTab + "&date=" + dateRecherche + "&jourSemaine=" + document.getElementById('joursemaine').value + "&Ex=" + ExDay + "&ligne=" + document.getElementById("date").options[document.getElementById('date').selectedIndex].text + "&schema=" + schema;
                  }
                  console.log(queryString);
                  ajaxAffiner.open("GET", "requete.php" + queryString, false);
@@ -163,17 +169,28 @@ $base = pg_connect("host=192.168.207.125 dbname=chouette2 user=postgres password
 				<div>
 					<input id="ac-1" style="display: none" name="accordion-1" type="radio" checked />
 					<label for="ac-1">Quel jour ? Quelle ligne ?</label>
-					<article class="ac-large">
+					<article class="ac-exlarge">
                         <form method="post" action="#" name="FormDate">
+                        <center><p>Base de Donnée : <select onChange='ChoixSchema(this.value);' name="schema" id="schema"></p></center>
+                        <option selected>Choisir Base</option>  
+				                <?php 
+                                    $sqlSc= 'SELECT SCHEMA_NAME FROM information_schema.schemata LIMIT (SELECT "count"(*)	SCHEMA_NAME FROM information_schema.schemata)-6;'; 
+                                    $listeSc = pg_query($sqlSc); 
+                                        while ($valeurSc=pg_fetch_array($listeSc)){ 
+                	                        echo "<option>".$valeurSc["schema_name"]."</option>"; 
+                                        } 
+                                ?>
+                        <html> 
+			            </select><font size="1" id="label" style="display: none" color="red"> BASE : </font>
 						<center><p>Date à Rechercher : <br><input type="date" name="DateChoix" onChange="return JourDeLaDate()"><font size="1">ex : 2015-01-01</font></p>
                         <center><p>Jour de la Semaine : <br><input type="text" name="jour" id="joursemaine" style="width:200px;text-align:center" readonly></p></center>
                         <center><p>Numéro de Ligne :<br><select onChange='AjaxListeCalendrier(this.value);' name="type" id="date"></p></center>
                         <option selected>Choisir</option>  
 				                <?php 
-                                    $sql= 'SELECT "name" FROM "aix_"."lines" ORDER BY "name" ASC'; 
+                                    $sql= 'SELECT "number" FROM "'.$schema.'"."lines" ORDER BY "number" ASC'; 
                                     $liste = pg_query($sql); 
                                         while ($valeur=pg_fetch_array($liste)){ 
-                	                        echo "<option>".$valeur["name"]."</option>"; 
+                	                        echo "<option>".$valeur["number"]."</option>"; 
                                         } 
                                 ?>
                         <html> 
@@ -181,6 +198,12 @@ $base = pg_connect("host=192.168.207.125 dbname=chouette2 user=postgres password
                             </form>
 					</article>
 				</div>
+                <?php
+                    if($schema){
+                        echo "<script>document.getElementById('label').innerHTML = ' BASE : ".$schema."'</script>";
+                        echo "<script>document.getElementById('label').style.display = 'block'</script>";
+                    }
+                ?>
 				<div>
 					<input id="ac-2" style="display: none" name="accordion-1" type="radio" />
 					<label for="ac-2">Jour Particulier ? <i>(Information)</i></label>

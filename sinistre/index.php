@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <?php
-$base = pg_connect("host=192.168.207.125 dbname=vehicules_sinistre user=postgres password=postgres");
+$base = pg_connect("host=192.168.207.21 dbname=vehicules_sinistre user=postgres password=postgres");
 $bus = $_GET['bus'];
 //$bus = "117014";
 $sql = "SELECT * FROM public.vehicules WHERE vehicule = '".$bus."' and archive = '0'";
@@ -30,6 +30,7 @@ echo '<div id="modeleHidden" style="display:none">'.$modele.'</div>';
 <style>
 canvas { 
 	background:url('images/".$modele.".png'); cursor: crosshair;
+    background-image: -WebKit-canvas('myCanvas');
 	background-repeat:no-repeat; 
 }
 </style>" ?>
@@ -49,8 +50,9 @@ canvas {
 }
     </script>
 </head>
-<body onload="init();window.setInterval('parsedate()', 1000);">
-<canvas id="myCanvas" width="1150" height="805">Votre Navigateur ne fonctionne pas avec cette technologie.</canvas>
+<body onload="init();window.setInterval('parsedate()', 1000);" onbeforeprint="test();">
+<!--<canvas id="myCanvas" width="1150" height="805">Votre Navigateur ne fonctionne pas avec cette technologie.</canvas>-->
+<canvas id="myCanvas" width="1150" height="1020">Votre Navigateur ne fonctionne pas avec cette technologie.</canvas>
 <center><button onClick="window.location.href='http://mdmkpa/vehicules/'" class="myButton">Retour &agrave; l'accueil</button><button onClick="window.location.href='http://mdmkpa/carte/'" class="myButton">Carte des Sinistres</button></center><br>
 <table id="tableau" border="1">
   <thead>
@@ -89,7 +91,7 @@ while ($data = pg_fetch_array($req)) {
             <input type="file" name="fileToUpload" id="fileToUpload">
             <input type="submit" value="Upload Image" name="submit">
         </form><?php echo'<script>uploadByjQuery("'.$data['motif'].'", '.$data['coordx'].', '.$data['coordy'].')</script>';?></td>
-	<?php }else{echo'<td><a href="http://192.168.207.125/sinistre/photo_sinistre/files/'.$data['photo'].'">Oui</td>';};
+	<?php }else{echo'<td><a href="http://192.168.207.21/sinistre/photo_sinistre/files/'.$data['photo'].'">Oui</td>';};
     echo '<td><a href="http://mdmkpa/carte/index.php?q='.$data['coordonnees_sinistre'].'" onclick="window.open(this.href); return false;">'.$data['coordonnees_sinistre'].'</a></td>'; 
 	echo '<td><img src="./images/supprimer.svg" onclick="deleteRow(this)" /></td>';
 	echo '<td style=\'display: none;\'>'.$data['coordx'].'</td>';
