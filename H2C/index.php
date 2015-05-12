@@ -23,7 +23,7 @@
     $(function(){
   $('#content').on('click', '.notify', function(){
     $(this).fadeOut(350, function(){
-      $(location).attr('href','http://google.com/');
+      $(location).attr('href','#home');
     });
   });
 });
@@ -123,7 +123,7 @@ document.getElementById("contentok").style.display = 'block';
               <form action="requete.php" method="get">
 				<li><span class="topic">Date debut :</span><span class="stars"><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /></span><input type="text" value="JJ/MM/AAAA" name="ImportDateDebut" style="padding: 0 0 0 0;margin: 0 0 0 0;width: auto;text-align: center" /></li>
 				<li><span class="topic">Date fin :</span><span class="stars"><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /></span><input type="text" value="JJ/MM/AAAA" name="ImportDateFin" style="padding: 0 0 0 0;margin: 0 0 0 0;width: auto;text-align: center" /></li>
-                <li><span class="topic">Purger : </span><span class="stars"><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /></span></center><input type="checkbox" name="PurgeOui" style="padding: 0 0 0 0;margin: 0 0 0 0;width: 170px;text-align: center"/></li>
+                <li><span class="topic">Purger : </span><span class="stars"><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /></span></center><input type="checkbox" checked="true" name="PurgeOui" style="padding: 0 0 0 0;margin: 0 0 0 0;width: 170px;text-align: center"/></li>
 				<li><span class="topic">Confirmer : </span><span class="stars"><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /></span><input type="checkbox" name="ImportConfirmOui" style="padding: 0 0 0 0;margin: 0 0 0 0;width: 170px;text-align: center"/></li>
 				<li><span class="topic">Lancer le job :</span><span class="stars"><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /></span><input type="submit" value="Valider" onclick="show();" name="ImportValider" style="padding: 0 0 0 0;margin: 0 0 0 0;width: 170px;text-align: center" /></li>
 			    <li style="visibility: hidden"><input type="text" name="Job" value="Import" /></li>
@@ -169,6 +169,8 @@ document.getElementById("contentok").style.display = 'block';
 				            <p>Il n'efface pas les données actuellement en ligne.</p>
 			            </li>
 			            </ul>
+                    <hr class="spacer"/>
+                        <center><a class="button" href="./exports/">Exports H2C</a></center>
 		            </div>
 	</div><!-- End menu work -->
 
