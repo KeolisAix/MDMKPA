@@ -12,15 +12,15 @@ error_reporting(-1);
 ###                  ###
 
 $Job = $_GET["Job"];
-$Demandeur = "CompteTest";
+$Demandeur = $_GET["mail"];
 $DateNow = date("d/m/Y");
 $HeureNow = date("H:i:s");
 $Mail = $_GET["mail"];
-
+$base = "test";
 ###                  ###
 #      IMPORTATION     #
 ###                  ###
-
+exec('cmd.exe /c calc.exe');
 if($Job == "Import"){
     $DateDebut = $_GET["ImportDateDebut"];
     $DateFin = $_GET["ImportDateFin"];
@@ -30,12 +30,13 @@ if($Job == "Import"){
     $dateAnnonceFin = date('Y-m-d', strtotime($dateFormatFin));
     $dureeSejour = (strtotime($dateAnnonceFin) - strtotime($dateAnnonceDebut)) /86400;
     if($_GET["PurgeOui"]){ $Purge = "1"; } else { $Purge = "0";}
-    AddLogs($ChouetteLogsPath, $Job.";".$DateNow.";".$HeureNow.";".$DateDebut.";".$DateFin.";".$Purge.";".$Demandeur);
+    AddLogs($ChouetteLogsPath, $Job.";".$base.";".$DateNow.";".$HeureNow.";".$DateDebut.";".$DateFin.";".$Purge.";".$Demandeur);
     $DateSplit = explode('/', $DateDebut);
     //echo $Mail;
-    $testt = 'cmd.exe /c "C:\H2C\Import\Hastus2Chouette_Import\Hastus2Chouette_Import_run.bat" --context_param purge='.$Purge.' --context_param datedebut='.$DateSplit[2].$DateSplit[1].$DateSplit[0].' --context_param jours='.$dureeSejour.' --context_param mail='.$Mail;    
+    $testt = 'cmd.exe /c "C:\H2C\Import\Hastus2Chouette_Import\Hastus2Chouette_Import_run.bat" --context_param purge='.$Purge.' --context_param datedebut='.$DateSplit[2].$DateSplit[1].$DateSplit[0].' --context_param base='.$base.' --context_param jours='.$dureeSejour.' --context_param mail='.$Mail;    
     echo $testt;
-    exec('cmd.exe /c "C:\H2C\Import\Hastus2Chouette_Import\Hastus2Chouette_Import_run.bat" --context_param purge='.$Purge.' --context_param datedebut='.$DateSplit[2].$DateSplit[1].$DateSplit[0].' --context_param jours='.$dureeSejour.' --context_param mail='.$Mail);
+    exec('cmd.exe /c calc.exe');
+    //exec('cmd.exe /c "C:\H2C\Import\Hastus2Chouette_Import\Hastus2Chouette_Import_run.bat" --context_param purge='.$Purge.' --context_param datedebut='.$DateSplit[2].$DateSplit[1].$DateSplit[0].' --context_param base='.$base.' --context_param jours='.$dureeSejour.' --context_param mail='.$Mail);
 }
 
 ###                  ###
@@ -46,16 +47,16 @@ if($Job == "Export"){
     $ExportFormat = $_GET["ExportFormat"];
     $ExportName = $_GET["ExportName"];
     $ExportBase = $_GET["ExportBase"];
-    AddLogs($ChouetteLogsPath, $Job.";".$DateNow.";".$HeureNow.";".$ExportFormat.";".$ExportName.";".$ExportBase.";".$Demandeur);
+    AddLogs($ChouetteLogsPath, $Job.";;".$DateNow.";".$HeureNow.";".$ExportFormat.";".$ExportName.";".$ExportBase.";".$Demandeur);
     exec("C:\Windows\System32\calc.exe");
 }
 
 ###                  ###
-#      EXPORTATION     #
+#     MISE EN PROD     #
 ###                  ###
 
 if($Job == "MEP"){
-    AddLogs($ChouetteLogsPath, $Job.";".$DateNow.";".$HeureNow.";;;;".$Demandeur);
+    AddLogs($ChouetteLogsPath, $Job.";;".$DateNow.";".$HeureNow.";;;;".$Demandeur);
     exec("C:\Windows\System32\calc.exe");
 }
 ###                  ###

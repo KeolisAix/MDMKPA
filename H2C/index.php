@@ -20,18 +20,38 @@
             document.getElementById("ConfirmMEP").disabled = true;
         }
     }
+    $(function(){
+  $('#content').on('click', '.notify', function(){
+    $(this).fadeOut(350, function(){
+      $(location).attr('href','http://google.com/');
+    });
+  });
+});
+    function show(){
+document.getElementById("contentok").style.display = 'block';
+}
 </script>
 <!--[if lt IE 8]><script> iexplorer = 1; </script><![endif]--><meta name="title" content="John Doe" />
 <meta name="description" content="description" />
 <link rel="image_src" type=" image/jpeg" href="images/vcard/profile.jpg" />
 <link rel="stylesheet" href="./css/prettyPhoto.css" type="text/css" media="screen"/>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
 </head>
    <body>
+<div id="contentok" style="display: none">
+      <div class="notify successbox">
+        <h1>Job validé !</h1>
+        <span class="alerticon"><img src="images/check.png" alt="checkmark" /></span>
+        <p>Le job d'import a bien été envoyé au serveur Talend.</p>
+          <p>Vous allez recevoir un mail une fois le job terminé.</p>
+      </div>
+</div>
        <!-- Wrapper --><div id="wrapper">
 	<!-- Vcard --><div id="vcard">
 		<div class="clearpx"></div>
+
 
 
 <!-- Header -->
@@ -105,7 +125,7 @@
 				<li><span class="topic">Date fin :</span><span class="stars"><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /></span><input type="text" value="JJ/MM/AAAA" name="ImportDateFin" style="padding: 0 0 0 0;margin: 0 0 0 0;width: auto;text-align: center" /></li>
                 <li><span class="topic">Purger : </span><span class="stars"><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /></span></center><input type="checkbox" name="PurgeOui" style="padding: 0 0 0 0;margin: 0 0 0 0;width: 170px;text-align: center"/></li>
 				<li><span class="topic">Confirmer : </span><span class="stars"><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /></span><input type="checkbox" name="ImportConfirmOui" style="padding: 0 0 0 0;margin: 0 0 0 0;width: 170px;text-align: center"/></li>
-				<li><span class="topic">Lancer le job :</span><span class="stars"><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /></span><input type="submit" value="Valider" name="ImportValider" style="padding: 0 0 0 0;margin: 0 0 0 0;width: 170px;text-align: center" /></li>
+				<li><span class="topic">Lancer le job :</span><span class="stars"><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /></span><input type="submit" value="Valider" onclick="show();" name="ImportValider" style="padding: 0 0 0 0;margin: 0 0 0 0;width: 170px;text-align: center" /></li>
 			    <li style="visibility: hidden"><input type="text" name="Job" value="Import" /></li>
     <?php echo '<li style="visibility: hidden"><input type="text" name="mail" value="'.$mail.'" /></li>' ?>
                 </form>
