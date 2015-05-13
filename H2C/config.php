@@ -15,13 +15,6 @@ $BDDUser = "postgres";
 $BDDPass = "postgres";
 $Database = "authentification";
 
-###                  ###
-#    Schema Bases      #
-###                  ###
-
-$BDDproduction = "";
-$BDDpreprod = "";
-$BDDtest = "";
 
 ###                  ###
 #    Chemins Jobs      #
