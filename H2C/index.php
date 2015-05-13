@@ -44,7 +44,7 @@ document.getElementById("contentok").style.display = 'block';
       <div class="notify successbox">
         <h1>Job validé !</h1>
         <span class="alerticon"><img src="images/check.png" alt="checkmark" /></span>
-        <p>Le job d'import a bien été envoyé au serveur Talend.</p>
+        <p>Le job demandé a bien été envoyé au serveur Talend.</p>
           <p>Vous allez recevoir un mail une fois le job terminé.</p>
       </div>
 </div>
@@ -59,9 +59,21 @@ document.getElementById("contentok").style.display = 'block';
    	<div id="logo">Hastus2Chouette</div>
 		<ul id="menu">
 			<li class="active"><a href="#home">Accueil</a></li>
+                        <?php
+                @$Auth = $_POST['Auth'];
+                if ($Auth == 1){
+                    $mail = $_POST['mail'];
+            ?>
 			<li><a href="#import">Importer</a></li>
    			<li><a href="#export">Exporter</a></li>
    			<li><a href="#MEP">Mise en Production</a></li>
+                    <?php
+                                
+                }
+                else{
+
+                }
+                    ?>
 		</ul>
 	</div><!-- End Header -->
 
@@ -155,7 +167,7 @@ document.getElementById("contentok").style.display = 'block';
                                 <li><span class="topic">Nom du Fichier :</span><span class="stars"><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /></span><input type="text" value="Export_2015.zip" name="ExportName" style="padding: 0 0 0 0;margin: 0 0 0 0;width: auto;text-align: center" /></li>
 				                <li><span class="topic">Base :</span><span class="stars"><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /></span><input type="text" value="Production" name="ExportBase" style="padding: 0 0 0 0;margin: 0 0 0 0;width: auto;text-align: center" /></li>
 				                <li><span class="topic">Confirmer :</span><span class="stars"><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /></span><input type="checkbox" value="ExportConfirmOui" style="padding: 0 0 0 0;margin: 0 0 0 0;width: 170px;text-align: center"/></li>
-				                <li><span class="topic">Valider :</span><span class="stars"><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /></span><input type="submit" value="Valider" name="ExportValider" style="padding: 0 0 0 0;margin: 0 0 0 0;width: 170px;text-align: center" /></li>
+				                <li><span class="topic">Valider :</span><span class="stars"><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /></span><input type="submit" value="Valider" onclick="show();" name="ExportValider" style="padding: 0 0 0 0;margin: 0 0 0 0;width: 170px;text-align: center" /></li>
 			                    <li style="visibility: hidden"><input type="text" name="Job" value="Export" /></li>
                     <?php echo '<li style="visibility: hidden"><input type="text" name="mail" value="'.$mail.'" /></li>' ?>
 			                </form>
@@ -188,7 +200,7 @@ document.getElementById("contentok").style.display = 'block';
                                 <ul><span class="topic">        - La base de "Production" actuelle sera supprimee.</span></ul>
                                 <ul><span class="topic">        - La mise en production est irreversible</span></ul>
                                 <ul><span class="topic">Pour Confirmer, cochez la case suivante : <input type="checkbox" id="CheckConfirm" value="CheckConfirm" onchange="Confirm();"></span></span></ul>
-                                <ul><span class="topic"><input type="submit" id="ConfirmMEP" value="JOB : Mise en Production" disabled /></span></ul>
+                                <ul><span class="topic"><input type="submit" id="ConfirmMEP" onclick="show();" value="JOB : Mise en Production" disabled /></span></ul>
 			                    <li style="visibility: hidden"><input type="text" name="Job" value="MEP" /></li>
                     <?php echo '<li style="visibility: hidden"><input type="text" name="mail" value="'.$mail.'" /></li>' ?>
                             </form>

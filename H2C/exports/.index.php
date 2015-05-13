@@ -150,7 +150,7 @@
 			<td><a href='./$namehref'>$extn</a></td>
 			<td sorttable_customkey='$sizekey'><a href='./$namehref'>$size</a></td>
 			<td sorttable_customkey='$timekey'><a href='./$namehref'>$modtime</a></td>
-            <td><center><a href='./$namehref.txt'$favicon class='name'><img src='./.images/file.png'></a></center></td>
+            <td><center><a href='../Logs/$namehref.txt'$favicon class='name'><img src='./.images/file.png'></a></center></td>
 		</tr>");
 	   }
 	}
