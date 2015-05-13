@@ -9,11 +9,11 @@
 #    Base de Donnée    #
 ###                  ###
 
-$host = "";
-$port = "";
-$BDDUser = "";
-$BDDPass = "";
-$Database = "";
+$host = "192.168.207.22";
+$port = "5432";
+$BDDUser = "postgres";
+$BDDPass = "postgres";
+$Database = "authentification";
 
 ###                  ###
 #    Schema Bases      #

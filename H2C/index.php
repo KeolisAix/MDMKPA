@@ -1,4 +1,5 @@
-<?php error_reporting(0);?>
+<?php error_reporting(1);
+ include('config.php');?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"><head>
 <title>Hastus2Chouette</title>
@@ -59,21 +60,6 @@ document.getElementById("contentok").style.display = 'block';
    	<div id="logo">Hastus2Chouette</div>
 		<ul id="menu">
 			<li class="active"><a href="#home">Accueil</a></li>
-                        <?php
-                @$Auth = $_POST['Auth'];
-                if ($Auth == 1){
-                    $mail = $_POST['mail'];
-            ?>
-			<li><a href="#import">Importer</a></li>
-   			<li><a href="#export">Exporter</a></li>
-   			<li><a href="#MEP">Mise en Production</a></li>
-                    <?php
-                                
-                }
-                else{
-
-                }
-                    ?>
 		</ul>
 	</div><!-- End Header -->
 
@@ -90,25 +76,42 @@ document.getElementById("contentok").style.display = 'block';
             <?php
                 @$Auth = $_POST['Auth'];
                 if ($Auth == 1){
-                    $mail = $_POST['mail'];
-            ?>
-            <center><h1>Choix du Job !</h1>
-            <p><a href="#import" style="text-decoration: none"><input type="button" value="JOB : IMPORTATION" /></a></p>
-            <p><a href="#export" style="text-decoration: none"><input type="button" value="JOB : EXPORTATION"/></a></p>
-            <p><a href="#MEP" style="text-decoration: none"><input type="button" value="JOB : MISE EN PRODUCTION"/></a></p></div></center>
-        <?php
-                                
-                }
-                else{
-                    ?>
+                    $user = $_POST['mail'];
+                    $pass = $_POST['psw'];
+                    $base = pg_connect("host=".$host." port=".$port." dbname=".$Database." user=".$BDDUser." password=".$BDDPass);
+                    $sql = "SELECT \"public\".auth.utilisateur, \"public\".auth.pass FROM \"public\".auth WHERE \"public\".auth.utilisateur = '".$user."' AND \"public\".auth.pass = '".$pass."'";
+                    $req = pg_query($base ,$sql);
+                    $row = pg_num_rows($req);
+                    if($row == 1){
+                        $mail = $_POST['mail'];
+                                    ?>
+                                        <center><h1>Choix du Job !</h1>
+                                        <p><a href="#import" style="text-decoration: none"><input type="button" value="JOB : IMPORTATION" /></a></p>
+                                        <p><a href="#export" style="text-decoration: none"><input type="button" value="JOB : EXPORTATION"/></a></p>
+                                        <p><a href="#MEP" style="text-decoration: none"><input type="button" value="JOB : MISE EN PRODUCTION"/></a></p></div></center>
+                                    <?php
+                    }
+                    else{
+        ?>
         <form action="#home" method="post">
             <center><h1>Authentification Requise !</h1>
-            <p><input type="text" name="mail" style="text-align: center" value="Votre Email" /></p>
-            <p><input type="text" style="text-align: center" value="Mot de Passe"/></p>
+            <p><input type="text" onFocus="javascript:this.value=''" name="mail" style="text-align: center" value="Votre Email" /></p>
+            <p><input type="password" onFocus="javascript:this.value=''" name="psw" style="text-align: center" value="Mot de Passe"/></p>
             <p><input type="submit" value="Valider"/></p>
             <p><input type="text" name="Auth" value="1" style="display: none"/></p></div></center></form>
         <?php
-                  }
+                        }            
+                    }
+                else{
+        ?>
+        <form action="#home" method="post">
+            <center><h1>Authentification Requise ! </h1>
+            <p><input type="text" onFocus="javascript:this.value=''" name="mail" style="text-align: center" value="Votre Email" /></p>
+            <p><input type="password" onFocus="javascript:this.value=''" name="psw" style="text-align: center" value="Mot de Passe"/></p>
+            <p><input type="submit" value="Valider"/></p>
+            <p><input type="text" name="Auth" value="1" style="display: none"/></p></div></center></form>
+        <?php
+                }
         ?>
 
 	<div class="sidebar">
