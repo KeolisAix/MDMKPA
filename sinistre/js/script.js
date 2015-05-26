@@ -375,6 +375,40 @@ function modifierConstat(w){
 		}
 } //constat
 
+function ModifierCoord(w){
+		var j = w.parentNode.parentNode.rowIndex;
+		var NvlCoord = prompt("Nouvelles Coordonnées : ", "48.858388, 2.294481")
+		if(NvlCoord != null){
+		document.getElementById("tableau").rows[j].cells[9].innerHTML = '<a href="http://mdmkpa/carte/index.php?q='+NvlCoord+'" onclick="window.open(this.href); return false;">'+NvlCoord+'</a><input type="button" value="Modifier" onclick="ModifierCoord(this)" />'
+			try{
+			ajaxRequestUpdate = new XMLHttpRequest();
+			}catch (e){
+			   // Internet Explorer Browsers
+			   try{
+				  ajaxRequestUpdate = new ActiveXObject("Msxml2.XMLHTTP");
+			   }catch (e) {
+				  try{
+					 ajaxRequestUpdate = new ActiveXObject("Microsoft.XMLHTTP");
+				  }catch (e){
+					 // Something went wrong
+					 alert("Your browser broke!");
+					 return false;
+				  }
+			   }
+			 }
+	 var bus = document.getElementById("busHidden").innerHTML;
+	 var x = document.getElementById("tableau").rows[j].cells[11].innerHTML;
+	 var y = document.getElementById("tableau").rows[j].cells[12].innerHTML;
+	 var motifupdate = encode64(document.getElementById("tableau").rows[j].cells[5].innerHTML);
+	 var NvlCoord64 = encode64(NvlCoord);
+	 var queryString = "?update=5";
+	 queryString +=  "&motifUpdate=" + motifupdate + "&bus=" + bus + "&coord=" + NvlCoord64 + "&x=" + x + "&y=" + y;
+	 ajaxRequestUpdate.open("GET", "requete.php" + queryString, true);
+	 ajaxRequestUpdate.send(null);
+		}
+} //constat
+
+
 function archivage(w){
 		userConfirm = confirm('Etes-vous sur que le véhicule a été réparé ?');
 			if (userConfirm == true) {

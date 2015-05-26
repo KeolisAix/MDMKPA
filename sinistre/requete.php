@@ -49,5 +49,12 @@ if ($update == 4){
 	echo" Oui 4";
 }
 
+if ($update == 5){
+	$coord = urldecode(base64_decode($_GET['coord']));
+	$motifUpdate = $_GET['motifUpdate'];
+	$sql = "UPDATE vehicules SET coordonnees_sinistre = '".$coord."' WHERE motif = '".$motifUpdate."' AND vehicule = '".$bus."'";
+	echo" Oui 5";
+}
+
 $req = pg_query($db,$sql) or die('Erreur SQL !<br>'.$sql.'<br>'.mysql_error());
 ?>
