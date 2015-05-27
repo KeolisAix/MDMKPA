@@ -31,6 +31,13 @@
             document.getElementById("ImportValider").disabled = true;
         }
     }
+    function ConfirmBILL(){ // Freeze / Défreeze bouton Valider
+        if(document.getElementById("BillValider").disabled == true){
+          document.getElementById("BillValider").disabled = false;
+        }else{
+            document.getElementById("BillValider").disabled = true;
+        }
+    }
     function ConfirmEXPORT(){ // Freeze / Défreeze bouton Valider
         if(document.getElementById("ExportValider").disabled == true){
           document.getElementById("ExportValider").disabled = false;
@@ -125,7 +132,8 @@ document.getElementById("contentko").style.display = 'inline';
                                         <center><h1>Choix du Job !</h1>
                                         <p><a href="#import" style="text-decoration: none"><input type="button" value="JOB : IMPORTATION" /></a></p>
                                         <p><a href="#export" style="text-decoration: none"><input type="button" value="JOB : EXPORTATION"/></a></p>
-                                        <p><a href="#MEP" style="text-decoration: none"><input type="button" value="JOB : MISE EN PRODUCTION"/></a></p></div></center>
+                                        <p><a href="#MEP" style="text-decoration: none"><input type="button" value="JOB : MISE EN PRODUCTION"/></a></p>
+                                        <p><a href="#Bill" style="text-decoration: none"><input type="button" value="JOB : EXPORT BILLETTIQUE"/></a></p></div></center>
                                     <?php
                     }
                     else{
@@ -190,10 +198,42 @@ document.getElementById("contentko").style.display = 'inline';
 		<h2>Explications :</h2>
 			<ul>	
 			<li class="li-moreinfo">
+				<p class="nopadding">Le job d'exportation billettique permet de faire la liaison entre Hastus et la "Billettique"</p></p>
+				<p>Il permet d'avoir accès a un jeu de fichier pour la billettique</p>
+			</li>
+			</ul>
+		</div>
+	</div><!-- Menu BILL -->
+       
+       	<div id="menu_Bill" class="contentitem">
+			<div class="pagetitle">JOB : EXPORT BILLETTIQUE</div>
+				<div class="main">
+		<center><h1>JOB : EXPORT BILLETTIQUE</h1></center>
+			<ul class="Bill">
+              <form action="requete.php" method="get">
+				<li><span class="topic">Date debut :</span><span class="stars"><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /></span><input type="text" value="JJ/MM/AAAA" name="BillDateDebut" style="padding: 0 0 0 0;margin: 0 0 0 0;width: auto;text-align: center" /></li>
+				<li><span class="topic">Date fin :</span><span class="stars"><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /></span><input type="text" value="JJ/MM/AAAA" name="BillDateFin" style="padding: 0 0 0 0;margin: 0 0 0 0;width: auto;text-align: center" /></li>
+                <li><span class="topic">Nom du Fichier :</span><span class="stars"><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /></span><input type="text" value="Bill_2015" name="BillName" style="padding: 0 0 0 0;margin: 0 0 0 0;width: auto;text-align: center" /></li>
+				<li><span class="topic">Confirmer : </span><span class="stars"><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /></span><input type="checkbox" id="CheckConfirmIMPORT" name="BillConfirmOui" onclick="ConfirmBILL();" style="padding: 0 0 0 0;margin: 0 0 0 0;width: 170px;text-align: center"/></li>
+				<li><span class="topic">Lancer le job :</span><span class="stars"><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /></span><input type="submit" value="Valider" onclick="show();" disabled id="BillValider" style="padding: 0 0 0 0;margin: 0 0 0 0;width: 170px;text-align: center" /></li>
+			    <li style="visibility: hidden"><input type="text" name="Job" value="Bill" /></li>
+    <?php echo '<li style="visibility: hidden"><input type="text" name="mail" value="'.$mail.'" /></li>' ?>
+                </form>
+            </ul>
+				</div>
+
+		<div class="sidebar">
+
+		<h2>Explications :</h2>
+			<ul>	
+			<li class="li-moreinfo">
 				<p class="nopadding">Le job d'importation permet de faire la liaison entre Hastus et Chouette</p></p>
 				<p>Il permet d'intégrer directement les données de Hastus directement dans Chouette.</p>
 			</li>
 			</ul>
+                        		<hr class="spacer"/>
+
+			<a class="button" href="./bill/">Export Billettique</a>
 		</div>
 	</div><!-- Menu export -->
 

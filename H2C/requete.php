@@ -17,6 +17,7 @@ $DateNow = date("d/m/Y");
 $HeureNow = date("H:i:s");
 $Mail = $_GET["mail"];
 $base = "test";
+
 ###                  ###
 #      IMPORTATION     #
 ###                  ###
@@ -35,6 +36,26 @@ if($Job == "Import"){
     echo $testt;
     //exec('cmd.exe /c calc.exe');
     exec('cmd.exe /c '.$JobImportPath.' --context_param purge='.$Purge.' --context_param datedebut='.$DateSplit[2].$DateSplit[1].$DateSplit[0].' --context_param base='.$base.' --context_param jours='.$dureeSejour.' --context_param mail='.$Mail);
+}
+
+###                  ###
+#      BILLETTIQUE     #
+###                  ###
+if($Job == "Bill"){
+    $DateDebut = $_GET["BillDateDebut"];
+    $DateFin = $_GET["BillDateFin"];
+    $BillName = $_GET["BillName"];
+    $dateFormatDebut = str_replace('/', '-', $DateDebut);
+    $dateAnnonceDebut = date('Y-m-d', strtotime($dateFormatDebut));
+    $dateFormatFin = str_replace('/', '-', $DateFin);
+    $dateAnnonceFin = date('Y-m-d', strtotime($dateFormatFin));
+    $dureeSejour = (strtotime($dateAnnonceFin) - strtotime($dateAnnonceDebut)) /86400;
+    AddLogs($ChouetteLogsPath, $Job.";;".$DateNow.";".$HeureNow.";".$DateDebut.";".$DateFin.";;".$Demandeur);
+    $DateSplit = explode('/', $DateDebut);
+    $testt = 'cmd.exe /c '.$JobBillPath.' --context_param datedebut='.$DateSplit[2].$DateSplit[1].$DateSplit[0].' --context_param jours='.$dureeSejour.' --context_param fichier='.$BillName.' --context_param mail='.$Mail;    
+    echo $testt;
+    //exec('cmd.exe /c calc.exe');
+    exec('cmd.exe /c '.$JobBillPath.' --context_param datedebut='.$DateSplit[2].$DateSplit[1].$DateSplit[0].' --context_param jours='.$dureeSejour.'  --context_param fichier='.$BillName.' --context_param mail='.$Mail);
 }
 
 ###                  ###

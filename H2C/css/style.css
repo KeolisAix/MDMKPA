@@ -91,6 +91,13 @@ ul.import li:last-child{border-bottom:none}
 ul.import li .topic{float:left;width:160px;font-weight:bold;color:#777;font-size:14px;text-shadow:1px 1px 1px #fff;height:7px}
 ul.import li .stars{float:left;width:120px}
 
+/*----------------------------------ExportBill----------------------------------*/
+ul.Bill{margin:-10px 0 0 0}
+ul.Bill li{padding:14px 10px 14px 0;border-bottom:1px solid #ddd;color:#888;text-shadow:1px 1px 1px #fff;list-style:none}
+ul.Bill li:last-child{border-bottom:none}
+ul.Bill li .topic{float:left;width:160px;font-weight:bold;color:#777;font-size:14px;text-shadow:1px 1px 1px #fff;height:7px}
+ul.Bill li .stars{float:left;width:120px}
+
 /*----------------------------------export----------------------------------*/
 #exportmask{width:710px;height:185px;position:relative;margin-top:25px;overflow:hidden}
 #exportscroller{width:710px;position:absolute;margin-top:0}
