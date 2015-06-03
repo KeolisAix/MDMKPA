@@ -117,17 +117,17 @@ document.getElementById("contentko").style.display = 'inline';
 	<div id="menu_home" class="contentitem">
 		<div class="main">
 			<div class="pagetitle">Hastus2Chouette - Bienvenue</div>
-            <?php
-                @$Auth = $_POST['Auth'];
-                if ($Auth == 1){
+            <?php // A VOIR SI UNE AUTHENTIFICATION VIA AD EST POSSIBLE
+                @$Auth = $_POST['Auth']; //Test l'Authentification
+                if ($Auth == 1){ // Si une authentification est demander alors on test les informations.
                     $user = $_POST['mail'];
                     $pass = $_POST['psw'];
-                    $base = pg_connect("host=".$host." port=".$port." dbname=".$Database." user=".$BDDUser." password=".$BDDPass);
+                    $base = pg_connect("host=".$host." port=".$port." dbname=".$Database." user=".$BDDUser." password=".$BDDPass); //Connection BDD
                     $sql = "SELECT \"public\".auth.utilisateur, \"public\".auth.pass FROM \"public\".auth WHERE \"public\".auth.utilisateur = '".$user."' AND \"public\".auth.pass = '".$pass."'";
                     $req = pg_query($base ,$sql);
                     $row = pg_num_rows($req);
-                    if($row == 1){
-                        $mail = $_POST['mail'];
+                    if($row == 1){ // Si l'email && psw correspond alors le nombre de ligne de la requete sera 1 
+                        $mail = $_POST['mail']; // du coup on défini email du demandeur et ont lui affiche le menu
                                     ?>
                                         <center><h1>Choix du Job !</h1>
                                         <p><a href="#import" style="text-decoration: none"><input type="button" value="JOB : IMPORTATION" /></a></p>
@@ -136,7 +136,7 @@ document.getElementById("contentko").style.display = 'inline';
                                         <p><a href="#Bill" style="text-decoration: none"><input type="button" value="JOB : EXPORT BILLETTIQUE"/></a></p></div></center>
                                     <?php
                     }
-                    else{
+                    else{ // Sinon on lui demande de réessayer (Captcha ? AntiBot ? etc.. A définir) 
         ?>
         <form action="#home" method="post">
             <center><h1>Authentification Requise !</h1>
@@ -148,7 +148,7 @@ document.getElementById("contentko").style.display = 'inline';
         <?php
                         }            
                     }
-                else{
+                else{ //Si aucune authentification est demander alors il en demande une... Logique en fin de compte.
         ?>
         <form action="#home" method="post">
             <center><h1>Authentification Requise ! </h1>
@@ -167,7 +167,6 @@ document.getElementById("contentko").style.display = 'inline';
 				<li>Completement autonome</li>
 				<li>Suivi des actions</li>
 				<li>Gestion d'accès</li>
-				<!--<li>Wordpress Themes</li>-->
 			</ul>
 
 		<hr class="spacer"/>

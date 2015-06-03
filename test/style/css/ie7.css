@@ -1,0 +1,11 @@
+#menu li {
+	display: inline; 
+}
+
+ul.bg-switcher li {
+	display: inline; 
+}
+
+.message ul li span.twitterStatus {
+	font-size: 12px;
+}
