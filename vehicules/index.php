@@ -39,6 +39,7 @@ function ok(){
 $Access_detail = 0;
 if(isset($_POST['searchbus'])){ //check if form was submitted
 $Access_detail = 1;
+$ControleurInput = $_POST['ControleurInput'];
 $input = $_POST['searchbus']; //get input text
     $r=pg_query($connect , "SELECT * FROM vehicules.vehicule WHERE parc_keolis = '".$input."'");
     for ($i=0; $i<pg_numrows($r); $i++) {
@@ -64,7 +65,7 @@ if(isset($_POST['ExportExcel'])){
 			<li class="active"><a href="#home">Recherche</a></li>
 			<?php if($Access_detail == 1){echo"<li><a href='#skills'>Details</a></li>
 			<li><a href='#work'>Autres Informations</a></li>
-			<li><a href='http://mdmkpa/sinistre/index.php?bus=".$l["parc_keolis"]."&modele=".$l["modele"]."&controleur=Willy Boisfer'>Sinistre</a></li>";}?>
+			<li><a href='http://mdmkpa/sinistre/index.php?bus=".$l["parc_keolis"]."&modele=".$l["modele"]."&controleur=".$ControleurInput."'>Sinistre</a></li>";}?>
        <!-- <li><a href="#networks">Administratif</a></li>
    			<!--<li><a href="#contact">Contact</a></li>-->
 		</ul>
@@ -80,8 +81,25 @@ if(isset($_POST['ExportExcel'])){
 	<div id="menu_home" class="contentitem">
 		<div class="main">
 			<div class="pagetitle">KPA Parc - Bienvenue</div>
+            <?php // A VOIR SI UNE AUTHENTIFICATION VIA AD EST POSSIBLE
+                @$Auth = $_POST['Auth']; //Test l'Authentification
+                if ($Auth == 1 or isset($ControleurInput)){ // Si une authentification est demander alors on test les informations.
+                    $user = $_POST['user'];
+                    $pass = $_POST['psw'];
+                    $ds = ldap_connect("kiwi.private");  // On initialise la connexion au domaine (doit être un serveur LDAP valide !)
+                    $r = ldap_bind($ds,"$user@kiwi.private","$pass");
+                    $sr = ldap_search($ds,"OU=Comptes standards,OU=Utilisateurs,OU=13_K_PAYS_AIX,OU=Filiales,OU=DDMED,OU=KEOLISPROD,DC=kiwi,DC=private","sAMAccountName=".$user);
+                    $nb = ldap_get_entries($ds, $sr);	
+                    if($r or isset($ControleurInput)){ // Si l'email && psw correspond alors le nombre de ligne de la requete sera 1 
+                        if(isset($ControleurInput)){
+                            $Controleur = $ControleurInput;
+                        }else{
+                            $Controleur = $nb["0"]["cn"]["0"]; // du coup on défini email du demandeur et ont lui affiche le men                               
+                        }
+            ?>
    <h1><center>Rechercher un bus :</center></h1>
    <form action="" name="form" id="recherche" method="POST">
+       <input type="hidden" name="ControleurInput" value="<?php echo $Controleur ?>"></input>
 	<p><input type="text" name="searchbus" id="searchbus" value="Bus ou modèle de bus" onclick="document.getElementById('submitrechercher').type='submit';document.form.action = '#skills'" onfocus="if(this.value == 'Bus ou modèle de bus') {this.value=''}" style="text-align:center"/></p>
     <div id="message" style="visibility: hidden; border:1px solid #FF0000;height:20px; width:420px; text-align:center;line-height:20px; font-weight:bold;" >OFF</div>
 	<p><input type="submit" id="submitrechercher" name="Rechercher" onclick="return controle();" value="Rechercher"></p>
@@ -137,7 +155,31 @@ if($total) {
 			  margin: 20px auto;
 			}</style>
 			</div>
-
+                <?php
+                    }
+                    else{ // Sinon on lui demande de réessayer (Captcha ? AntiBot ? etc.. A définir) 
+        ?>
+        <form action="#home" method="post">
+            <center><h1>Authentification Requise !</h1>
+            <p><input type="text" onFocus="javascript:this.value=''" name="user" style="text-align: center" value="Votre Identifiant Windows" /></p>
+            <p><input type="password" onFocus="javascript:this.value=''" name="psw" style="text-align: center" value="Mot de Passe"/></p>
+            <p><input type="submit" value="Valider"/></p>
+            <p><input type="text" name="Auth" value="1" style="display: none"/></p></div></center></form>
+       <script>error();</script>
+        <?php
+                        }            
+                    }
+                else{ //Si aucune authentification est demander alors il en demande une... Logique en fin de compte.
+        ?>
+        <form action="#home" method="post">
+            <center><h1>Authentification Requise ! </h1>
+            <p><input type="text" onFocus="javascript:this.value=''" name="user" style="text-align: center" value="Votre Identifiant Windows" /></p>
+            <p><input type="password" onFocus="javascript:this.value=''" name="psw" style="text-align: center" value="Mot de Passe"/></p>
+            <p><input type="submit" value="Valider"/></p>
+            <p><input type="text" name="Auth" value="1" style="display: none"/></p></div></center></form>
+        <?php
+                }
+        ?>
 	<div class="sidebar">
 		<h2>Info bus, kesako ? :</h2>
 			<ul>
@@ -185,7 +227,7 @@ if($total) {
 			<ul class="skills">
 				<li><span class="topic">Certificat d'Immatriculation</span><span class="stars"><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /></span><?php echo $l["certificat_immatriculation"]; ?></li>
                 <li><span class="topic">Gabarit</span><span class="stars"><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /></span><?php echo $l["gabarit"]; ?></li>
-				<li><span class="topic">Sinistre</span><span class="stars"><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /></span><?php echo "<a href='http://192.168.207.125/sinistre/index.php?bus=".$l["parc_keolis"]."&modele=".$l["modele"]."&controleur=Willy Boisfer'>Lien vers sinistre</a>" ?></li>
+				<li><span class="topic">Sinistre</span><span class="stars"><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /></span><?php echo "<a href='http://192.168.207.125/sinistre/index.php?bus=".$l["parc_keolis"]."&modele=".$l["modele"]."&controleur=".$Controleur."'>Lien vers sinistre</a>" ?></li>
 				<li><span class="topic">Contrat Michelin</span><span class="stars"><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /></span><?php if($l["contrat_michelin"] == "+"){echo "<img src='http://www.akg-solutions.fr/imgs/Ok-icon.png' alt='ok' width='16' height='16'/>";} else{echo "<img src='http://www.mescomptesfaciles.fr/css/icons/16/cross.png' alt='ko' width='16' height='16'/>";}?></li>
                 <li><span class="topic">Carte Grise</span><span class="stars"><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /></span>
                 <div id="shadowing"></div>
@@ -201,13 +243,6 @@ if($total) {
 </div>
                 <a href="#" onclick="document.getElementById('shadowing').style.display='block';
 	  document.getElementById('box').style.display='block';">Disponnible</a>
-                
-                
-                
-                
-                
-                
-                
                 </li>
 			</ul>
 				</div>

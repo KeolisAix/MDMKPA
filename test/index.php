@@ -6,15 +6,14 @@ $r = ldap_bind($ds,"$login@kiwi.private","$pass") or die("Connexion impossible")
 
 if ($ds<>0)
 	{ 
-		$sr = ldap_search($ds,"OU=Comptes standards,OU=Utilisateurs,OU=13_K_PAYS_AIX,OU=Filiales,OU=DDMED,OU=KEOLISPROD,DC=kiwi,DC=private","sAMAccountName=pmaldi");
-		echo "Le résultat de la recherche est ".$sr."<br />";
+		$sr = ldap_search($ds,"OU=KEOLISPROD,DC=kiwi,DC=private","sAMAccountName=".$login);
 		$nb = ldap_get_entries($ds, $sr);		
-		echo "Nombre de personnes trouvées : ".$nb["count"]. "<p>";
-		for ($i=0;$i<$nb["count"];$i++)
-			{
-				echo "Name : ". $nb[$i]["dn"] ."<br>";// afichier DN des user
-			}
-		echo "Déconnexion...<br>";
+		echo "Name : ". $nb[0]["cn"][0] ."<br>";// afichier DN des user
+        echo "Mail : ". $nb[0]["mail"][0] ."<br>";// afichier DN des user
+        echo "Groupes : ". $nb[0]["memberof"][0] ."<br>";// afichier DN des user
+        echo "Fonction : ". $nb[0]["title"][0] .",". $nb[0]["department"][0] ."<br>";// afichier DN des user
+        echo "Société : ". $nb[0]["company"][0] ."<br>";// afichier DN des user
+        echo "Tel : ". $nb[0]["telephonenumber"][0] ."<br>";// afichier DN des user
 		ldap_close($ds);
  
 	}

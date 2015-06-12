@@ -120,15 +120,15 @@ document.getElementById("contentko").style.display = 'inline';
             <?php // A VOIR SI UNE AUTHENTIFICATION VIA AD EST POSSIBLE
                 @$Auth = $_POST['Auth']; //Test l'Authentification
                 if ($Auth == 1){ // Si une authentification est demander alors on test les informations.
-                    $user = $_POST['mail'];
+                    $user = $_POST['user'];
                     $pass = $_POST['psw'];
-                    $base = pg_connect("host=".$host." port=".$port." dbname=".$Database." user=".$BDDUser." password=".$BDDPass); //Connection BDD
-                    $sql = "SELECT \"public\".auth.utilisateur, \"public\".auth.pass FROM \"public\".auth WHERE \"public\".auth.utilisateur = '".$user."' AND \"public\".auth.pass = '".$pass."'";
-                    $req = pg_query($base ,$sql);
-                    $row = pg_num_rows($req);
-                    if($row == 1){ // Si l'email && psw correspond alors le nombre de ligne de la requete sera 1 
-                        $mail = $_POST['mail']; // du coup on défini email du demandeur et ont lui affiche le menu
-                                    ?>
+                    $ds = ldap_connect("kiwi.private");  // On initialise la connexion au domaine (doit être un serveur LDAP valide !)
+                    $r = ldap_bind($ds,"$user@kiwi.private","$pass");
+                    $sr = ldap_search($ds,"OU=Comptes standards,OU=Utilisateurs,OU=13_K_PAYS_AIX,OU=Filiales,OU=DDMED,OU=KEOLISPROD,DC=kiwi,DC=private","sAMAccountName=".$user);
+                    $nb = ldap_get_entries($ds, $sr);	
+                    if($r){ // Si l'email && psw correspond alors le nombre de ligne de la requete sera 1 
+                        $mail = $nb["0"]["mail"]["0"]; // du coup on défini email du demandeur et ont lui affiche le men   
+                        ?>
                                         <center><h1>Choix du Job !</h1>
                                         <p><a href="#import" style="text-decoration: none"><input type="button" value="JOB : IMPORTATION" /></a></p>
                                         <p><a href="#export" style="text-decoration: none"><input type="button" value="JOB : EXPORTATION"/></a></p>
@@ -140,7 +140,7 @@ document.getElementById("contentko").style.display = 'inline';
         ?>
         <form action="#home" method="post">
             <center><h1>Authentification Requise !</h1>
-            <p><input type="text" onFocus="javascript:this.value=''" name="mail" style="text-align: center" value="Votre Email" /></p>
+            <p><input type="text" onFocus="javascript:this.value=''" name="user" style="text-align: center" value="Votre Identifiant Windows" /></p>
             <p><input type="password" onFocus="javascript:this.value=''" name="psw" style="text-align: center" value="Mot de Passe"/></p>
             <p><input type="submit" value="Valider"/></p>
             <p><input type="text" name="Auth" value="1" style="display: none"/></p></div></center></form>
@@ -152,7 +152,7 @@ document.getElementById("contentko").style.display = 'inline';
         ?>
         <form action="#home" method="post">
             <center><h1>Authentification Requise ! </h1>
-            <p><input type="text" onFocus="javascript:this.value=''" name="mail" style="text-align: center" value="Votre Email" /></p>
+            <p><input type="text" onFocus="javascript:this.value=''" name="user" style="text-align: center" value="Votre Identifiant Windows" /></p>
             <p><input type="password" onFocus="javascript:this.value=''" name="psw" style="text-align: center" value="Mot de Passe"/></p>
             <p><input type="submit" value="Valider"/></p>
             <p><input type="text" name="Auth" value="1" style="display: none"/></p></div></center></form>

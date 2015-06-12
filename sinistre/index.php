@@ -19,7 +19,7 @@ echo '<div id="modeleHidden" style="display:none">'.$modele.'</div>';
     <!------- -->
 <link rel="stylesheet" href="css/upload.css">
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"></script>
-
+    <!--<script>window.history.pushState(document.title,document.title,"/index.php");</script>
     
     <!----->
 <link rel="stylesheet" type="text/css" href="./css/style.css">
