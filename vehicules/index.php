@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- CONNECTION ZONE -->
-<?php $connect=pg_connect ("host=192.168.207.21 dbname=vehicules user=postgres password=postgres"); ?>
+<?php $connect=pg_connect ("host=192.168.207.22 dbname=vehicules user=postgres password=postgres"); ?>
 <!-- FIN CONNECTION ZONE -->
 <head>
 <title>KPA Parc</title>

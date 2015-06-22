@@ -1,5 +1,5 @@
 <?php
-$base = pg_connect("host=192.168.207.21 dbname=chouette2 user=postgres password=postgres");
+$base = pg_connect("host=192.168.207.22 dbname=chouette2 user=postgres password=postgres");
 // ESPACE VARIABLE
 $R = $_GET['ajax'];
 $DateBefore = $_GET['date'];

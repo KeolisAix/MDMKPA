@@ -3,7 +3,7 @@
 <?php
 error_reporting(E_ALL);
 ini_set('display_errors', '1');
-$base = pg_connect("host=192.168.207.21 dbname=vehicules_sinistre user=postgres password=postgres");    
+$base = pg_connect("host=192.168.207.22 dbname=vehicules_sinistre user=postgres password=postgres");    
 $sql = "SELECT * FROM public.maps WHERE type='arret'";
 $req = pg_query($base ,$sql) or die('Erreur SQL !<br />'.$sql.'<br />'.pgsql_error());
 $q=0;

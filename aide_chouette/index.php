@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <?php
 //CONNECTION ZONE
-$base = pg_connect("host=192.168.207.21 dbname=chouette2 user=postgres password=postgres");
+$base = pg_connect("host=192.168.207.22 dbname=chouette2 user=postgres password=postgres");
 $schema = $_GET['schema'];
 echo "<script>var schema = document.URL.split('?schema=')[1]; </script>";
 ?>
