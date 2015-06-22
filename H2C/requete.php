@@ -31,7 +31,7 @@
         }
         </style>
         <script>
-            window.history.pushState('Job', 'Requete', '/');
+            window.history.pushState('Job', 'Requete', '/H2C/');
         </script>
     </head>
 </html>
