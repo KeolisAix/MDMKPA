@@ -13,7 +13,6 @@ $host = "192.168.207.22";
 $port = "5432";
 $BDDUser = "postgres";
 $BDDPass = "postgres";
-$Database = "authentification";
 
 
 ###                  ###

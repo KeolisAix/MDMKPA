@@ -68,8 +68,8 @@ if (!isset($JobLancer)) { // test d'une variable non attribué la premiere fois
         AddLogs($ChouetteLogsPath, $Job.";".$base.";".$DateNow.";".$HeureNow.";".$DateDebut.";".$DateFin.";".$Purge.";".$Demandeur); // Ajout du job dans les Logs
         $DateSplit = explode('/', $DateDebut); // Permet de split la date par lots
         $testt = 'cmd.exe /c '.$JobImportPath.' --context_param purge='.$Purge.' --context_param datedebut='.$DateSplit[2].$DateSplit[1].$DateSplit[0].' --context_param base='.$base.' --context_param jours='.$dureeSejour.' --context_param mail='.$Mail;    
-        //exec('cmd.exe /c '.$JobImportPath.' --context_param purge='.$Purge.' --context_param datedebut='.$DateSplit[2].$DateSplit[1].$DateSplit[0].' --context_param base='.$base.' --context_param jours='.$dureeSejour.' --context_param mail='.$Mail);
-        exec('cmd.exe /c calc.exe');
+        exec('cmd.exe /c '.$JobImportPath.' --context_param purge='.$Purge.' --context_param datedebut='.$DateSplit[2].$DateSplit[1].$DateSplit[0].' --context_param base='.$base.' --context_param jours='.$dureeSejour.' --context_param mail='.$Mail);
+        //exec('cmd.exe /c calc.exe');
         JobFinish();
       // ^= Lancement de la commande H2C.  
     }
