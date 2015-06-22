@@ -30,6 +30,9 @@
           margin-bottom: 10px;
         }
         </style>
+        <script>
+            window.history.pushState('Job', 'Requete', '/');
+        </script>
     </head>
 </html>
 

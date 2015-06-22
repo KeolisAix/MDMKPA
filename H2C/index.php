@@ -130,8 +130,8 @@ document.getElementById("contentko").style.display = 'inline';
                         $mail = $nb["0"]["mail"]["0"]; // du coup on défini email du demandeur et ont lui affiche le men   
                         ?>
                                         <center><h1>Choix du Job !</h1>
-                                        <p><a href="#import" style="text-decoration: none"><input type="button" value="JOB : IMPORTATION" /></a></p>
-                                        <p><a href="#export" style="text-decoration: none"><input type="button" value="JOB : EXPORTATION"/></a></p>
+                                        <p><a href="#import" style="text-decoration: none"><input type="button" value="JOB : D'IMPORT" /></a></p>
+                                        <p><a href="#export" style="text-decoration: none"><input type="button" value="JOB : D'EXPORT"/></a></p>
                                         <p><a href="#MEP" style="text-decoration: none"><input type="button" value="JOB : MISE EN PRODUCTION"/></a></p>
                                         <p><a href="#Bill" style="text-decoration: none"><input type="button" value="JOB : EXPORT BILLETTIQUE"/></a></p></div></center>
                                     <?php
