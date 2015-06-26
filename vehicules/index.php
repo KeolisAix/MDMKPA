@@ -40,6 +40,8 @@ $Access_detail = 0;
 if(isset($_POST['searchbus'])){ //check if form was submitted
 $Access_detail = 1;
 $ControleurInput = $_POST['ControleurInput'];
+$user = $_POST['UserInput'];
+$pass = $_POST['PswInput'];
 $input = $_POST['searchbus']; //get input text
     $r=pg_query($connect , "SELECT * FROM vehicules.vehicule WHERE parc_keolis = '".$input."'");
     for ($i=0; $i<pg_numrows($r); $i++) {
@@ -63,11 +65,18 @@ if(isset($_POST['ExportExcel'])){
    	<div id="logo">KPA Parc</div>
 		<ul id="menu">
 			<li class="active"><a href="#home">Recherche</a></li>
-			<?php if($Access_detail == 1){echo"<li><a href='#skills'>Details</a></li>
-			<li><a href='#work'>Autres Informations</a></li>
-			<li><a href='http://mdmkpa/sinistre/index.php?bus=".$l["parc_keolis"]."&modele=".$l["modele"]."&controleur=".$ControleurInput."'>Sinistre</a></li>";}?>
-       <!-- <li><a href="#networks">Administratif</a></li>
-   			<!--<li><a href="#contact">Contact</a></li>-->
+			<?php if($Access_detail == 1){
+            echo"<li><a href='#skills'>Details</a></li>
+			    <li><a href='#work'>Autres Informations</a></li>
+                <form id='ViaSinistre' method='post' hidden action='http://mdmkpa/sinistre/index.php'>
+                    <input type='hidden' name='bus' value='".$l["parc_keolis"]."'/>
+                    <input type='hidden' name='modele' value='".$l["modele"]."'/>
+                    <input type='hidden' name='controleur' value='".$ControleurInput."'/>
+                    <input type='hidden' name='user' value='".$user."'/>
+                    <input type='hidden' name='psw' value='".$pass."'/>
+                </form>
+			    <li><a href='#' onclick='document.getElementById(\"ViaSinistre\").submit()'>Sinistre</a></li>";
+                }?>
 		</ul>
 	</div><!-- End Header -->
 
@@ -100,6 +109,8 @@ if(isset($_POST['ExportExcel'])){
    <h1><center>Rechercher un bus :</center></h1>
    <form action="" name="form" id="recherche" method="POST">
        <input type="hidden" name="ControleurInput" value="<?php echo $Controleur ?>"></input>
+       <input type="hidden" name="UserInput" value="<?php echo $user ?>"></input>
+       <input type="hidden" name="PswInput" value="<?php echo $pass ?>"></input>
 	<p><input type="text" name="searchbus" id="searchbus" value="Bus ou modèle de bus" onclick="document.getElementById('submitrechercher').type='submit';document.form.action = '#skills'" onfocus="if(this.value == 'Bus ou modèle de bus') {this.value=''}" style="text-align:center"/></p>
     <div id="message" style="visibility: hidden; border:1px solid #FF0000;height:20px; width:420px; text-align:center;line-height:20px; font-weight:bold;" >OFF</div>
 	<p><input type="submit" id="submitrechercher" name="Rechercher" onclick="return controle();" value="Rechercher"></p>

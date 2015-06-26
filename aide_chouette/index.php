@@ -227,6 +227,13 @@ echo "<script>var schema = document.URL.split('?schema=')[1]; </script>";
 						<div id="resultat"></div>
 					</article>
 				</div>
+                <div>
+					<input id="ac-5" style="display: none" name="accordion-1" type="radio" onclick='Affine();' />
+					<label for="ac-5">Horraires</label>
+					<article id="Form" class="ac-exlarge">
+						<a href="http://192.168.207.22:3000/referentials/2/lines/430/routes/1174/vehicle_journeys?utf8=%E2%9C%93&q%5Bjourney_pattern_id_eq%5D=&q%5Btime_tables_id_not_eq%5D=0&q%5Btime_tables_id_eq%5D=<?php echo 'lol'; ?>&q%5Bvehicle_journey_at_stops_departure_time_not_eq%5D=0&q%5Bvehicle_journey_at_stops_departure_time_gt(3i)%5D=1&q%5Bvehicle_journey_at_stops_departure_time_gt(2i)%5D=1&q%5Bvehicle_journey_at_stops_departure_time_gt(1i)%5D=2000&q%5Bvehicle_journey_at_stops_departure_time_gt(4i)%5D=13&q%5Bvehicle_journey_at_stops_departure_time_gt(5i)%5D=14"<input type="button" value="OKOKOK">
+					</article>
+				</div>
 			</section>
         </div>
     </body>

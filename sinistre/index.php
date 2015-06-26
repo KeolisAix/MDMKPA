@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <?php
 $base = pg_connect("host=192.168.207.22 dbname=vehicules_sinistre user=postgres password=postgres");
-$bus = $_GET['bus'];
+$bus = $_POST['bus'];
 //$bus = "117014";
 $sql = "SELECT * FROM public.vehicules WHERE vehicule = '".$bus."' and archive = '0'";
 $req = pg_query($base ,$sql) or die('Erreur SQL !<br />'.$sql.'<br />'.pgsql_error());
-$controleur = $_GET['controleur'];
-$modele = $_GET['modele'];
+$controleur = $_POST['controleur'];
+$modele = $_POST['modele'];
+$user = $_POST['user'];
+$pass = $_POST['psw'];
 //$modele = "GX 127C";
 echo '<div id="controleurHidden" style="display:none">'.$controleur.'</div>';
 echo '<div id="busHidden" style="display:none">'.$bus.'</div>';
@@ -53,7 +55,14 @@ canvas {
 <body onload="init();window.setInterval('parsedate()', 1000);" onbeforeprint="test();">
 <!--<canvas id="myCanvas" width="1150" height="805">Votre Navigateur ne fonctionne pas avec cette technologie.</canvas>-->
 <canvas id="myCanvas" width="1150" height="1020">Votre Navigateur ne fonctionne pas avec cette technologie.</canvas>
-<center><button onClick="window.location.href='http://mdmkpa/vehicules/'" class="myButton">Retour &agrave; l'accueil</button><button onClick="window.location.href='http://mdmkpa/carte/'" class="myButton">Carte des Sinistres</button></center><br>
+<center>
+        <form action="http://mdmkpa/vehicules/" method = "post">
+            <input type="submit" name="Accueil" class="myButton" value="Retour &agrave; l'accueil" />
+            <input type="text" hidden name="ControleurRetour" class="myButton" value="<?php echo $controleur; ?>" />
+            <input type="text" hidden name="user" class="myButton" value="<?php echo $user; ?>" />
+            <input type="text" hidden name="psw" class="myButton" value="<?php echo $pass; ?>" />
+            <input type="text" hidden name="Auth" class="myButton" value="1" />
+        </form><button onClick="window.location.href='http://mdmkpa/carte/'" class="myButton">Carte des Sinistres</button></center><br>
 <table id="tableau" border="1">
   <thead>
     <tr>

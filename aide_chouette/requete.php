@@ -127,7 +127,7 @@ if($R == 4){
        
         }
         echo "</table></center>";
-        echo "<p>Les Calendriers utilisés pour ce tableau sont : ".$nbcal;
+        echo "<div name='nbfinalcal'>Les Calendriers utilisés pour tableau sont : ".$nbcal."</div>";
         die();
 
     }
