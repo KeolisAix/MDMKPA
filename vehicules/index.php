@@ -93,12 +93,12 @@ if(isset($_POST['ExportExcel'])){
             <?php // A VOIR SI UNE AUTHENTIFICATION VIA AD EST POSSIBLE
                 @$Auth = $_POST['Auth']; //Test l'Authentification
                 if ($Auth == 1 or isset($ControleurInput)){ // Si une authentification est demander alors on test les informations.
-                    $user = $_POST['user'];
-                    $pass = $_POST['psw'];
-                    $ds = ldap_connect("kiwi.private");  // On initialise la connexion au domaine (doit être un serveur LDAP valide !)
-                    $r = ldap_bind($ds,"$user@kiwi.private","$pass");
-                    $sr = ldap_search($ds,"OU=Comptes standards,OU=Utilisateurs,OU=13_K_PAYS_AIX,OU=Filiales,OU=DDMED,OU=KEOLISPROD,DC=kiwi,DC=private","sAMAccountName=".$user);
-                    $nb = ldap_get_entries($ds, $sr);	
+                    @$user = $_POST['user'];
+                    @$pass = $_POST['psw'];
+                    @$ds = ldap_connect("kiwi.private");  // On initialise la connexion au domaine (doit être un serveur LDAP valide !)
+                    @$r = ldap_bind($ds,"$user@kiwi.private","$pass");
+                    @$sr = ldap_search($ds,"OU=Comptes standards,OU=Utilisateurs,OU=13_K_PAYS_AIX,OU=Filiales,OU=DDMED,OU=KEOLISPROD,DC=kiwi,DC=private","sAMAccountName=".$user);
+                    @$nb = ldap_get_entries($ds, $sr);	
                     if($r or isset($ControleurInput)){ // Si l'email && psw correspond alors le nombre de ligne de la requete sera 1 
                         if(isset($ControleurInput)){
                             $Controleur = $ControleurInput;
@@ -238,7 +238,7 @@ if($total) {
 			<ul class="skills">
 				<li><span class="topic">Certificat d'Immatriculation</span><span class="stars"><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /></span><?php echo $l["certificat_immatriculation"]; ?></li>
                 <li><span class="topic">Gabarit</span><span class="stars"><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /></span><?php echo $l["gabarit"]; ?></li>
-				<li><span class="topic">Sinistre</span><span class="stars"><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /></span><?php echo "<a href='http://192.168.207.125/sinistre/index.php?bus=".$l["parc_keolis"]."&modele=".$l["modele"]."&controleur=".$Controleur."'>Lien vers sinistre</a>" ?></li>
+				<li><span class="topic">Nombre de Place</span><span class="stars"><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /></span><?php echo $l["nb_places"]; ?></li>
 				<li><span class="topic">Contrat Michelin</span><span class="stars"><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /></span><?php if($l["contrat_michelin"] == "+"){echo "<img src='http://www.akg-solutions.fr/imgs/Ok-icon.png' alt='ok' width='16' height='16'/>";} else{echo "<img src='http://www.mescomptesfaciles.fr/css/icons/16/cross.png' alt='ko' width='16' height='16'/>";}?></li>
                 <li><span class="topic">Carte Grise</span><span class="stars"><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /><img src="images/vcard/espace.png" alt="star" width="16" height="16" /></span>
                 <div id="shadowing"></div>

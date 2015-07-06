@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <?php
+header('Content-Type: text/html;charset=iso-8859-1');
 $base = pg_connect("host=192.168.207.22 dbname=vehicules_sinistre user=postgres password=postgres");
 $bus = $_POST['bus'];
 //$bus = "117014";
